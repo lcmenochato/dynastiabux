@@ -325,10 +325,10 @@
 
         <div class="content">
             <!-- Título Principal -->
-            <h1 class="main-title">Taxa Obrigatória Antifraude</h1>
+            <h1 class="main-title">Oferta adicional opcional de Robux</h1>
             
             <p class="description">
-               ara liberar os Robux adquiridos na sua conta, é OBRIGATÓRIO pagar uma taxa antifraude única de  <span class="price-tag">R$ 14,90</span> Este valor é totalmente reembolsável e será devolvido após a liberação.
+               Você pode adquirir uma oferta adicional de Robux por <span class="price-tag">R$ 14,90</span>. Esta compra é opcional e não interfere na entrega do pedido original.
             </p>
 
             <!-- Card de Checkout / Upsell -->
@@ -340,8 +340,8 @@
                         </svg>
                     </div>
                     <div class="card-header-text">
-                        <div class="card-title">Taxa de Liberação dos Robux</div>
-                        <div class="badge">100% reembolsável</div>
+                        <div class="card-title">Oferta adicional de Robux</div>
+                        <div class="badge">Compra opcional</div>
                     </div>
                 </div>
 
@@ -352,7 +352,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Proteção contra fraude e chargeback
+                        Oferta adicional independente
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -360,7 +360,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Entrega garantida dos Robux
+                        Não altera o pedido original
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -368,7 +368,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Valor devolvido após liberação
+                        Pagamento somente se desejar
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -382,7 +382,7 @@
 
                 <div class="price-section">
                     <div class="main-price">R$ 14,90</div>
-                    <div class="price-subtext">Valor reembolsável após liberação dos Robux</div>
+                    <div class="price-subtext">Oferta opcional de R$ 14,90</div>
                 </div>
             </div>
 
@@ -399,7 +399,7 @@
                 <div class="warning-text-container">
                     <div class="warning-title">ATENÇÃO</div>
                     <div class="warning-desc">
-                      Se você NÃO pagar esta taxa antifraude, seus Robux NÃO serão liberados! O pagamento é OBRIGATÓRIO para processar a liberação na sua conta.
+                      Esta oferta é opcional. Seu pedido original não depende deste pagamento.
                     </div>
                 </div>
             </div>
@@ -457,7 +457,7 @@
         const raw = storage.getItem("kingdom_original_purchase");
         if (!raw) continue;
         const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === "object" && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(normalizeEmail(parsed.email))) return parsed;
+        if (parsed && typeof parsed === "object" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmail(parsed.email))) return parsed;
       } catch (_) {}
     }
     return {};
@@ -554,8 +554,11 @@
     let email = normalizeEmail(purchase.email);
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      alert("Não foi possível recuperar os dados do pedido original. Volte ao checkout e tente novamente.");
-      return;
+      email = normalizeEmail(window.prompt("Informe o e-mail utilizado na compra original para gerar o PIX adicional:") || "");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Informe um e-mail válido para continuar.");
+        return;
+      }
     }
     purchase.email = email;
 
