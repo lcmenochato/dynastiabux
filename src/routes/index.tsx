@@ -21,9 +21,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Kingdom Robux — Robux barato e entrega rápida" },
-      { name: "description", content: "Consulte os pacotes de Robux disponíveis e seus preços antes de comprar." },
+      { name: "description", content: "Compre Robux com os melhores preços do Brasil. 10% OFF na primeira compra." },
       { property: "og:title", content: "Kingdom Robux — Robux barato" },
-      { property: "og:description", content: "Confira os pacotes de Robux e os valores disponíveis na loja." },
+      { property: "og:description", content: "Os melhores preços em Robux. 10% OFF na primeira compra." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -101,8 +101,8 @@ const reviews: { name: string; text: string; img?: string }[] = [
 ];
 
 const faqs = [
-  { q: "Como posso saber que é confiável?", a: "Consulte as informações do produto e entre em contato com nosso suporte caso tenha dúvidas antes de comprar." },
-  { q: "Em quanto tempo vou receber meu pedido?", a: "O processamento do pedido começa após a confirmação do pagamento. Consulte o suporte para informações sobre a entrega." },
+  { q: "Como posso saber que é confiável?", a: "Temos milhares de clientes satisfeitos e uma comunidade enorme no Discord. Confira as avaliações reais logo acima." },
+  { q: "Em quanto tempo vou receber meu pedido?", a: "A maioria dos pedidos é entregue em poucos minutos após a confirmação do pagamento." },
   { q: "Posso cancelar minha compra após o pagamento?", a: "Se o pedido ainda não foi entregue, você pode solicitar o cancelamento pelo suporte. Veja nossa Política de reembolso." },
   { q: "Como entro em contato com o suporte?", a: "Pelo e-mail suporte@kingdomrobux.com ou pelo nosso servidor no Discord." },
 ];
@@ -248,11 +248,12 @@ export function Index() {
     if (el.scrollLeft < third * 0.5) el.scrollLeft += third;
     else if (el.scrollLeft > third * 1.5) el.scrollLeft -= third;
   };
-  const marquee = "KINGDOM ROBUX   CONFIRA NOSSOS PACOTES DE ROBUX   ";
+  const marquee = "👑 KINGDOM ROBUX   ROBUXBARATO   10% OFF NA SUA PRIMEIRA COMPRA!   ";
 
   return (
     <div className="min-h-screen bg-kingdom font-sans">
       
+      {view === "home" && <DemoPurchasePopup />}
       <div className="overflow-hidden bg-gold py-2 text-primary-foreground">
         <div className="flex w-max animate-marquee whitespace-pre font-display text-sm font-extrabold">
           {marquee.repeat(6)}
