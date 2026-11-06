@@ -362,6 +362,26 @@ type Items = Record<number, number>;
 function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" | "pix"; setView: (v: "home" | "checkout" | "pix") => void; items: Items; setItems: (f: (i: Items) => Items) => void; onAdd: (a: number) => void }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [robloxUser, setRobloxUser] = useState<{id:number;name:string;displayName:string;avatarUrl:string}|null>(null);
+  const [robloxLookupLoading, setRobloxLookupLoading] = useState(false);
+  const [robloxLookupError, setRobloxLookupError] = useState("");
+  async function locateRobloxUser() {
+    const name = username.trim();
+    if (!name || robloxLookupLoading) return;
+    setRobloxLookupLoading(true);
+    setRobloxLookupError("");
+    setRobloxUser(null);
+    try {
+      const response = await fetch("https://flevopay-api.lcfferr57.workers.dev/api/roblox-user?username=" + encodeURIComponent(name));
+      const data = await response.json();
+      if (!response.ok || !data.success) throw new Error(data.message || "Não foi possível localizar este usuário.");
+      setRobloxUser({id:data.id,name:data.name,displayName:data.displayName,avatarUrl:data.avatarUrl || ""});
+    } catch (error) {
+      setRobloxLookupError(error instanceof Error ? error.message : "Erro ao consultar o Roblox.");
+    } finally {
+      setRobloxLookupLoading(false);
+    }
+  }
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loadingPix, setLoadingPix] = useState(false);
   const [pixError, setPixError] = useState("");
@@ -494,7 +514,13 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         <label className="mt-5 block text-muted-foreground">Email *</label>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@email.com" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
         <label className="mt-5 block text-muted-foreground">Usuário Roblox *</label>
-        <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Seu usuário no Roblox" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
+        <input value={username} onChange={(e) => { setUsername(e.target.value); setRobloxUser(null); setRobloxLookupError(""); }} placeholder="Seu usuário no Roblox" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
+        <button type="button" onClick={locateRobloxUser} disabled={!username.trim() || robloxLookupLoading} className="mt-3 rounded-xl border border-border bg-muted px-4 py-2 font-semibold disabled:opacity-50">{robloxLookupLoading ? "Localizando..." : "Localizar usuário Roblox"}</button>
+        {robloxLookupError && <p role="alert" className="mt-2 text-sm text-destructive">{robloxLookupError}</p>}
+        {robloxUser && <div className="mt-3 flex items-center gap-3 rounded-xl border border-border bg-muted p-3">
+          {robloxUser.avatarUrl && <img src={robloxUser.avatarUrl} alt="Avatar Roblox" className="h-16 w-16 rounded-xl object-cover" />}
+          <div><p className="font-bold">{robloxUser.displayName}</p><p className="text-sm text-muted-foreground">@{robloxUser.name}</p><p className="text-xs text-muted-foreground">Confira se esta é sua conta Roblox.</p></div>
+        </div>}
       </div>
       <div className={card}>
         <h2 className="flex items-center gap-3 font-display text-2xl font-extrabold"><Lock className="h-6 w-6" /> Seus Produtos ({lines.length})</h2>
