@@ -362,43 +362,6 @@ type Items = Record<number, number>;
 function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" | "pix"; setView: (v: "home" | "checkout" | "pix") => void; items: Items; setItems: (f: (i: Items) => Items) => void; onAdd: (a: number) => void }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [robloxUser, setRobloxUser] = useState<{id:number;name:string;displayName:string;avatarUrl:string}|null>(null);
-  const [robloxLookupLoading, setRobloxLookupLoading] = useState(false);
-  const [robloxLookupError, setRobloxLookupError] = useState("");
-  useEffect(() => {
-    const name = username.trim();
-    setRobloxUser(null);
-    setRobloxLookupError("");
-    setRobloxLookupLoading(false);
-    if (name.length < 3 || !/^[a-zA-Z0-9_]{3,20}$/.test(name)) return;
-
-    const controller = new AbortController();
-    const timer = window.setTimeout(async () => {
-      setRobloxLookupLoading(true);
-      try {
-        const response = await fetch(
-          "https://flevopay-api.lcfferr57.workers.dev/api/roblox-user?username=" + encodeURIComponent(name),
-          { signal: controller.signal }
-        );
-        const data = await response.json();
-        if (!response.ok || !data.success) throw new Error(data.message || "Usuário não encontrado.");
-        if (!controller.signal.aborted) {
-          setRobloxUser({ id: data.id, name: data.name, displayName: data.displayName, avatarUrl: data.avatarUrl || "" });
-        }
-      } catch (error) {
-        if (!controller.signal.aborted) {
-          setRobloxLookupError(error instanceof Error ? error.message : "Não foi possível consultar o Roblox.");
-        }
-      } finally {
-        if (!controller.signal.aborted) setRobloxLookupLoading(false);
-      }
-    }, 650);
-
-    return () => {
-      window.clearTimeout(timer);
-      controller.abort();
-    };
-  }, [username]);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loadingPix, setLoadingPix] = useState(false);
   const [pixError, setPixError] = useState("");
@@ -531,17 +494,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         <label className="mt-5 block text-muted-foreground">Email *</label>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@email.com" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
         <label className="mt-5 block text-muted-foreground">Usuário Roblox *</label>
-        <div className="relative mt-2">
-          <input autoComplete="off" spellCheck={false} value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Digite seu usuário Roblox" className="w-full rounded-xl border border-border bg-muted px-4 py-3 pr-11 outline-none transition-colors duration-200 focus:border-primary" />
-          {robloxLookupLoading && <Loader2 aria-label="Buscando usuário" className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-muted-foreground" />}
-          {robloxUser && !robloxLookupLoading && <Check aria-label="Usuário encontrado" className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-emerald-500" />}
-        </div>
-        {robloxUser && <div className="mt-3 flex items-center gap-3 rounded-xl border border-border/70 bg-muted/50 p-3 animate-in fade-in slide-in-from-top-1 duration-300">
-          {robloxUser.avatarUrl ? <img src={robloxUser.avatarUrl} alt="Avatar Roblox" className="h-11 w-11 shrink-0 rounded-full object-cover" /> : <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-background"><User className="h-5 w-5 text-muted-foreground" /></div>}
-          <div className="min-w-0 flex-1"><p className="truncate text-sm font-semibold">{robloxUser.displayName}</p><p className="truncate text-xs text-muted-foreground">@{robloxUser.name}</p></div>
-          <Check className="h-4 w-4 shrink-0 text-emerald-500" />
-        </div>}
-        {robloxLookupError && username.trim().length >= 3 && <p role="status" className="mt-2 text-xs text-muted-foreground">{robloxLookupError}</p>}
+        <input autoComplete="off" spellCheck={false} value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Digite seu usuário Roblox" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none transition-colors duration-200 focus:border-primary" />
       </div>
       <div className={card}>
         <h2 className="flex items-center gap-3 font-display text-2xl font-extrabold"><Lock className="h-6 w-6" /> Seus Produtos ({lines.length})</h2>
