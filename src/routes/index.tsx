@@ -105,7 +105,7 @@ const faqs = [
   { q: "Como posso saber que é confiável?", a: "Temos milhares de clientes satisfeitos e uma comunidade enorme no Discord. Confira as avaliações reais logo acima." },
   { q: "Em quanto tempo vou receber meu pedido?", a: "A maioria dos pedidos é entregue em poucos minutos após a confirmação do pagamento." },
   { q: "Posso cancelar minha compra após o pagamento?", a: "Se o pedido ainda não foi entregue, você pode solicitar o cancelamento pelo suporte. Veja nossa Política de reembolso." },
-  { q: "Como entro em contato com o suporte?", a: "Pelo e-mail suporte@kingdomrobux.com ou pelo nosso servidor no Discord." },
+  { q: "Como entro em contato com o suporte?", a: "Pelo e-mail suporte@dynastiarobux.com ou pelo nosso servidor no Discord." },
 ];
 
 function Faq({ q, a }: { q: string; a: string }) {
@@ -132,7 +132,7 @@ function SupportPage() {
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const body = `Nome: ${name}\nE-mail: ${email}\nCódigo do pedido: ${order || "Não informado"}\nAssunto: ${subject}\n\nMensagem:\n${message}`;
-    window.location.href = `mailto:suporte@kingdombuxoficial.com?subject=${encodeURIComponent("Suporte Kingdom Robux - " + subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:suporte@dynastiarobux.com?subject=${encodeURIComponent("Suporte Dynastia Robux - " + subject)}&body=${encodeURIComponent(body)}`;
   };
   return (
     <main className="min-h-[75vh] bg-[#0b0b0c] px-5 pb-24 pt-10 text-white">
@@ -343,8 +343,8 @@ export function Index() {
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-3">
           <Logo big />
           <div>
-            <h4 className="font-bold tracking-widest text-primary">SUPORTE DYNASTIA ROBUX</h4>
-            <p className="mt-4 flex items-center gap-2 text-muted-foreground"><Mail className="h-4 w-4" /> suporte@kingdomrobux.com</p>
+            <h4 className="font-bold tracking-widest text-primary">ATENDIMENTO AO CLIENTE</h4>
+            <p className="mt-4 flex items-center gap-2 text-muted-foreground"><Mail className="h-4 w-4" /> suporte@dynastiarobux.com</p>
             <p className="mt-3 flex items-center gap-2 text-muted-foreground"><MessageCircle className="h-4 w-4" /> Discord</p>
           </div>
           <div>
