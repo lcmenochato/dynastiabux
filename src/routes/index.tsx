@@ -343,7 +343,7 @@ export function Index() {
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-3">
           <Logo big />
           <div>
-            <h4 className="font-bold tracking-widest text-primary">ATENDIMENTO AO CLIENTE</h4>
+            <h4 className="font-bold tracking-widest text-primary">SUPORTE DYNASTIA ROBUX</h4>
             <p className="mt-4 flex items-center gap-2 text-muted-foreground"><Mail className="h-4 w-4" /> suporte@kingdomrobux.com</p>
             <p className="mt-3 flex items-center gap-2 text-muted-foreground"><MessageCircle className="h-4 w-4" /> Discord</p>
           </div>
