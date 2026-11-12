@@ -355,6 +355,10 @@ export function Index() {
           </div>
         </div>
       </footer>
+      <div className="flex flex-wrap items-center justify-center gap-5 px-4 pb-8 pt-2">
+        <img src="https://i.postimg.cc/Sj0DPhFQ/selo-(2).png" alt="Selo de segurança" className="h-16 w-auto max-w-[140px] object-contain" loading="lazy" />
+        <img src="https://i.postimg.cc/Sj0DPhFS/ra1000.webp" alt="RA1000" className="h-16 w-auto max-w-[140px] object-contain" loading="lazy" />
+      </div>
     </div>
   );
 }
