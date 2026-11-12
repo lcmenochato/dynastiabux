@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-type Env = { VELANI_SECRET_KEY?: string; VELANI_API_URL?: string; VERCEL_URL?: string };
+type Env = { VELANI_SECRET_KEY?: string; VELANI_PUBLIC_KEY?: string; VELANI_API_URL?: string; VERCEL_URL?: string };
 
 export const Route = createFileRoute("/api/create-pix")({
   server: {
@@ -10,7 +10,10 @@ export const Route = createFileRoute("/api/create-pix")({
           const env = (process.env ?? {}) as Env;
           const secret = env.VELANI_SECRET_KEY;
           if (!secret) {
-            return Response.json({ success: false, message: "A chave da Velani não está configurada no servidor." }, { status: 500 });
+            return Response.json({ success: false, message: "Configure VELANI_SECRET_KEY na Vercel usando sua Secret Key da Velani (sk_live_...). A Public Key (pk_live_...) não cria cobranças." }, { status: 500 });
+          }
+          if (secret.startsWith("pk_live_")) {
+            return Response.json({ success: false, message: "A VELANI_SECRET_KEY está preenchida com uma Public Key (pk_live_...). Troque o valor dessa variável pela Secret Key (sk_live_...) no painel da Vercel." }, { status: 400 });
           }
           const input = await request.json() as {
             email?: string; username?: string; amount?: number; product?: string;
