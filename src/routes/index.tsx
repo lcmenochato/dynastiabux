@@ -33,13 +33,13 @@ export const Route = createFileRoute("/")({
 
 const products = [
   { amount: 700, price: 0, old: 0, img: "/images/robux-700.png?v=prata-esgotado-20261029", soldOut: true },
-  { amount: 1200, price: 19.9, old: 24, img: "/images/robux-1200.jpg?v=prata-20261029" },
-  { amount: 1700, price: 24.9, old: 32, img: "/images/robux-1700.jpg?v=prata-20261029" },
-  { amount: 2100, price: 29.9, old: 39, img: "/images/robux-2100.jpg?v=prata-20261029" },
-  { amount: 3600, price: 44.9, old: 59, img: "/images/robux-3600.jpg?v=prata-20261029" },
-  { amount: 4500, price: 59.9, old: 79, img: "/images/robux-4500.jpg?v=prata-20261029" },
-  { amount: 7000, price: 89.9, old: 119, img: "/images/robux-7000.jpg?v=prata-20261029" },
-  { amount: 10000, price: 119.9, old: 159, img: "/images/robux-10000.jpg?v=prata-20261029" },
+  { amount: 1200, price: 19.9, old: 24, img: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
+  { amount: 1700, price: 24.9, old: 32, img: "https://i.postimg.cc/YCcgjLGL/file-00000000fc10820eb49348f5b3585276.png" },
+  { amount: 2100, price: 29.9, old: 39, img: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
+  { amount: 3600, price: 44.9, old: 59, img: "https://i.postimg.cc/CxyDdnBb/file-000000004720820e96fffc337c6809b4.png" },
+  { amount: 4500, price: 59.9, old: 79, img: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
+  { amount: 7000, price: 89.9, old: 119, img: "https://i.postimg.cc/pTd53D4t/Promo-Neon-Roblox-7000-Robux.png" },
+  { amount: 10000, price: 119.9, old: 159, img: "https://i.postimg.cc/1tzVbp21/file-0000000070f0820e9e69a95a97920c59.png" },
 ];
 const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
@@ -154,16 +154,16 @@ function SupportPage() {
 }
 
 const demoPurchases = [
-  { name: "Julia", amount: 4500, image: "/images/robux-4500.jpg?v=prata-20261029" },
-  { name: "Gustavo", amount: 2100, image: "/images/robux-2100.jpg?v=prata-20261029" },
-  { name: "Roberto", amount: 1200, image: "/images/robux-1200.jpg?v=prata-20261029" },
-  { name: "Ana", amount: 1700, image: "/images/robux-1700.jpg?v=prata-20261029" },
-  { name: "Lucas", amount: 3600, image: "/images/robux-3600.jpg?v=prata-20261029" },
-  { name: "Mariana", amount: 7000, image: "/images/robux-7000.jpg?v=prata-20261029" },
-  { name: "Pedro", amount: 10000, image: "/images/robux-10000.jpg?v=prata-20261029" },
-  { name: "Beatriz", amount: 4500, image: "/images/robux-4500.jpg?v=prata-20261029" },
-  { name: "Rafael", amount: 1200, image: "/images/robux-1200.jpg?v=prata-20261029" },
-  { name: "Camila", amount: 2100, image: "/images/robux-2100.jpg?v=prata-20261029" },
+  { name: "Julia", amount: 4500, image: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
+  { name: "Gustavo", amount: 2100, image: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
+  { name: "Roberto", amount: 1200, image: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
+  { name: "Ana", amount: 1700, image: "https://i.postimg.cc/YCcgjLGL/file-00000000fc10820eb49348f5b3585276.png" },
+  { name: "Lucas", amount: 3600, image: "https://i.postimg.cc/CxyDdnBb/file-000000004720820e96fffc337c6809b4.png" },
+  { name: "Mariana", amount: 7000, image: "https://i.postimg.cc/pTd53D4t/Promo-Neon-Roblox-7000-Robux.png" },
+  { name: "Pedro", amount: 10000, image: "https://i.postimg.cc/1tzVbp21/file-0000000070f0820e9e69a95a97920c59.png" },
+  { name: "Beatriz", amount: 4500, image: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
+  { name: "Rafael", amount: 1200, image: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
+  { name: "Camila", amount: 2100, image: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
 ];
 function DemoPurchasePopup() {
   const [current, setCurrent] = useState(-1);
