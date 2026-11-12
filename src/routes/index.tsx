@@ -379,7 +379,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
   const subtotal = lines.reduce((t, p) => t + p.price * (items[p.amount] ?? 0), 0);
   const total = subtotal * (1 - discount);
   const setQty = (a: number, d: number) => setItems((it) => { const n = { ...it, [a]: (it[a] || 0) + d }; if ((n[a] ?? 0) <= 0) delete n[a]; return n; });
-  const api = "https://flevopay-api.lcfferr57.workers.dev";
+  const api = "/api";
   async function generatePix() {
     if (loadingPix || !username.trim() || !lines.length || !acceptedTerms) return;
     setLoadingPix(true);
