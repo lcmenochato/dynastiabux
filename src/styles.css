@@ -165,77 +165,41 @@
 @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 @utility animate-marquee { animation: marquee 20s linear infinite; }
 
-/* Kingdom Robux — paleta prata/azul aço (29-10-2026) */
+/* Tema roxo Kingdom Robux */
 :root, .dark {
- --gold: #9aabbf;
- --gold-deep: #536978;
- --gradient-gold: linear-gradient(135deg,#d6e0ed 0%,#9aabbf 48%,#697b90 100%);
- --gradient-bg: linear-gradient(145deg,#071a2b 0%,#102234 52%,#304553 100%);
- --shadow-gold: 0 0 30px -8px rgba(154,171,191,.55);
- --background: #071a2b;
- --foreground: #e8edf3;
- --card: #102234;
- --card-foreground: #e8edf3;
- --popover: #102234;
- --popover-foreground: #e8edf3;
- --primary: #9aabbf;
- --primary-foreground: #071a2b;
- --secondary: #536978;
- --secondary-foreground: #f1f5f9;
- --muted: #304553;
- --muted-foreground: #b5c1cf;
- --accent: #697b90;
- --accent-foreground: #ffffff;
- --border: #536978;
- --input: #536978;
- --ring: #9aabbf;
- --sidebar: #102234;
- --sidebar-foreground: #e8edf3;
- --sidebar-primary: #9aabbf;
- --sidebar-primary-foreground: #071a2b;
- --sidebar-accent: #304553;
- --sidebar-accent-foreground: #e8edf3;
- --sidebar-border: #536978;
- --sidebar-ring: #9aabbf;
+  --gold: oklch(0.76 0.19 300);
+  --gold-deep: oklch(0.58 0.22 295);
+  --gradient-gold: linear-gradient(135deg, oklch(0.83 0.16 305) 0%, oklch(0.68 0.22 295) 52%, oklch(0.55 0.23 285) 100%);
+  --gradient-bg: radial-gradient(ellipse at 50% 0%, oklch(0.31 0.12 295) 0%, oklch(0.20 0.08 290) 42%, oklch(0.13 0.05 285) 100%);
+  --shadow-gold: 0 0 28px -8px oklch(0.68 0.22 295 / 60%);
+  --background: oklch(0.14 0.055 285);
+  --foreground: oklch(0.97 0.015 300);
+  --card: oklch(0.21 0.075 290);
+  --card-foreground: oklch(0.97 0.015 300);
+  --popover: oklch(0.21 0.075 290);
+  --popover-foreground: oklch(0.97 0.015 300);
+  --primary: oklch(0.72 0.21 300);
+  --primary-foreground: oklch(0.14 0.055 285);
+  --secondary: oklch(0.34 0.12 292);
+  --secondary-foreground: oklch(0.97 0.015 300);
+  --muted: oklch(0.27 0.085 290);
+  --muted-foreground: oklch(0.78 0.055 300);
+  --accent: oklch(0.49 0.18 295);
+  --accent-foreground: oklch(0.98 0.01 300);
+  --border: oklch(0.48 0.14 295 / 65%);
+  --input: oklch(0.48 0.14 295 / 75%);
+  --ring: oklch(0.76 0.19 300);
+  --sidebar: oklch(0.19 0.07 290);
+  --sidebar-foreground: oklch(0.97 0.015 300);
+  --sidebar-primary: oklch(0.72 0.21 300);
+  --sidebar-primary-foreground: oklch(0.14 0.055 285);
+  --sidebar-accent: oklch(0.27 0.085 290);
+  --sidebar-accent-foreground: oklch(0.97 0.015 300);
+  --sidebar-border: oklch(0.48 0.14 295 / 65%);
+  --sidebar-ring: oklch(0.76 0.19 300);
 }
-
-/* Acabamento prata predominante: superfícies, botões, bordas e checkout */
-:root, .dark {
- --gold:#c7d0da; --gold-deep:#8998a8;
- --gradient-gold:linear-gradient(135deg,#f5f7fa 0%,#d7dfe7 25%,#9aaabd 55%,#e5eaf0 78%,#7f91a5 100%);
- --gradient-bg:radial-gradient(ellipse at 50% 0%,#64778a 0%,#34495c 35%,#142637 75%,#0c1927 100%);
- --shadow-gold:0 0 22px rgba(215,223,231,.35),0 0 3px rgba(255,255,255,.45);
- --background:#142637; --card:#34495c; --popover:#34495c;
- --primary:#d7dfe7; --primary-foreground:#101d2b;
- --secondary:#8998a8; --muted:#536978; --accent:#9aabbf;
- --border:#9aabbf; --input:#9aabbf; --ring:#e5eaf0;
-}
-.bg-card {background:linear-gradient(150deg,#536978,#304553 70%,#1a2c3c)}
-.border-border {border-color:rgba(215,223,231,.52)}
-.bg-muted {background-color:#536978}
-header {box-shadow:0 5px 24px rgba(220,230,240,.12)}
-button.bg-gold, .bg-gold {background:var(--gradient-gold)}
-
-/* Tema cinza-prata predominante — substitui o antigo azul aço */
-:root, .dark {
- --gold:#d4d6da; --gold-deep:#8e939a;
- --gradient-gold:linear-gradient(135deg,#fafafa 0%,#d9dce0 24%,#a5aab1 52%,#eceef0 78%,#92979f 100%);
- --gradient-bg:radial-gradient(ellipse at top,#6b6f75 0%,#42464c 34%,#25282d 72%,#17191d 100%);
- --shadow-gold:0 0 26px rgba(224,226,230,.38),0 0 4px rgba(255,255,255,.35);
- --background:#25282d; --foreground:#f3f4f5;
- --card:#41454b; --card-foreground:#f6f6f7;
- --popover:#383c42; --popover-foreground:#f6f6f7;
- --primary:#d9dce0; --primary-foreground:#1c1e22;
- --secondary:#8e939a; --secondary-foreground:#fff;
- --muted:#555960; --muted-foreground:#c6c9ce;
- --accent:#a5aab1; --accent-foreground:#191b1f;
- --border:#9da2a9; --input:#9da2a9; --ring:#e7e9ec;
- --sidebar:#383c42; --sidebar-foreground:#f5f5f6;
- --sidebar-primary:#d9dce0; --sidebar-primary-foreground:#1c1e22;
- --sidebar-accent:#555960; --sidebar-accent-foreground:#fff;
- --sidebar-border:#9da2a9; --sidebar-ring:#e7e9ec;
-}
-.bg-card {background:linear-gradient(150deg,#60646b 0%,#41454b 55%,#30343a 100%)}
-.bg-muted {background-color:#555960}
-.border-border {border-color:rgba(218,220,224,.55)}
-header {box-shadow:0 5px 24px rgba(220,220,224,.13)}
+.bg-card { background: linear-gradient(150deg, oklch(0.29 0.10 295), oklch(0.21 0.075 290) 65%, oklch(0.17 0.06 285)); }
+.bg-muted { background-color: var(--muted); }
+.border-border { border-color: oklch(0.72 0.17 300 / 38%); }
+header { box-shadow: 0 5px 24px oklch(0.08 0.04 290 / 45%); }
+button.bg-gold, .bg-gold { background: var(--gradient-gold); }
