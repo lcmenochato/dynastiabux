@@ -79,7 +79,8 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
 }
 
 function Logo({ big }: { big?: boolean }) {
-  return <img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className={big ? "w-52 max-w-full h-auto object-contain" : "h-20 sm:h-24 w-auto max-w-[280px] object-contain"} />;
+  if (big) return <div className="flex h-28 w-52 max-w-full items-center justify-center overflow-hidden"><img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className="h-full w-full scale-[1.18] object-contain" /></div>;
+  return <img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className="h-20 w-auto max-w-[280px] object-contain sm:h-24" />;
 }
 
 const reviews: { name: string; text: string; img?: string }[] = [
