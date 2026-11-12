@@ -249,7 +249,7 @@ export function Index() {
     if (el.scrollLeft < third * 0.5) el.scrollLeft += third;
     else if (el.scrollLeft > third * 1.5) el.scrollLeft -= third;
   };
-  const marquee = "👑 KINGDOM ROBUX   ROBUXBARATO   10% OFF NA SUA PRIMEIRA COMPRA!   ";
+  const marquee = "👑 DYNASTIA ROBUX   ROBUX BARATO   10% OFF NA SUA PRIMEIRA COMPRA!   ";
 
   return (
     <div className="min-h-screen bg-kingdom font-sans">
@@ -308,7 +308,7 @@ export function Index() {
             Venha fazer parte da nossa comunidade. O que você está esperando?
           </p>
           <div className="mx-auto mt-8 max-w-md overflow-hidden rounded-2xl border-2 border-primary">
-            <img src="https://i.postimg.cc/DZpq2P56/file-000000007ec0820e8028a62b890adbbb.png" alt="Perfil Kingdom Robux" className="block h-auto w-full" loading="lazy" />
+            <img src="https://i.postimg.cc/Z0kkyzyM/16-Sem-Titulo-20261112021405.png" alt="Instagram Dynastia Robux" className="block h-auto w-full" loading="lazy" />
           </div>
         </section>
 
