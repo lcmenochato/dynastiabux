@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Plus, Minus, Trash2, User, Lock, Check, Loader2, Menu, ShoppingCart, Search, Star, Mail, MessageCircle, Crown, BadgeCheck } from "lucide-react";
+import { Plus, Minus, Trash2, User, Lock, Check, Loader2, Menu, ShoppingCart, Search, Star, Mail, MessageCircle, Crown, BadgeCheck, Clock } from "lucide-react";
 import logoImg from "@/assets/logo.png.asset.json";
 import rv17 from "@/assets/review-17.jpg.asset.json";
 import rv18 from "@/assets/review-18.jpg.asset.json";
@@ -494,6 +494,13 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
           <span className="min-w-0 break-words">Pagamento</span>
         </div>
       </nav>
+      <div className="flex items-start gap-3 rounded-2xl border border-primary/25 bg-primary/5 px-4 py-3.5">
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary"><Clock className="h-5 w-5" /></span>
+        <div className="min-w-0">
+          <p className="text-sm font-bold text-foreground">Prazo de entrega dos Robux</p>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">Após a confirmação do pagamento, os Robux podem levar de <strong className="font-semibold text-foreground">1 a 6 dias úteis</strong> para cair na sua conta.</p>
+        </div>
+      </div>
       <div className={card}>
         <h2 className="flex items-center gap-3 font-display text-2xl font-extrabold"><User className="h-6 w-6" /> Seus Dados</h2>
         <label className="mt-5 block text-muted-foreground">Email *</label>
