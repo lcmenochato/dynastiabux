@@ -264,7 +264,7 @@ export function Index() {
       <header className="sticky top-0 z-10 border-b-2 border-primary/60 bg-background/90 px-4 py-4 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <button type="button" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}><Menu className="h-7 w-7" /></button>
-          <button onClick={() => setView("home")} aria-label="Início" className="flex min-w-0 items-center justify-center"><img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className="h-16 w-auto max-w-[230px] object-contain sm:h-20" /></button>
+          <button onClick={() => setView("home")} aria-label="Início" className="flex min-w-0 items-center justify-center"><img src="https://i.postimg.cc/rsZVkfF6/1794491752439.png" alt="Dynastia Bux" className="h-16 w-auto max-w-[230px] object-contain sm:h-20" /></button>
           <button onClick={() => setView("checkout")} aria-label="Carrinho" className="relative grid h-12 w-12 place-items-center rounded-full bg-gold text-primary-foreground shadow-gold">
             <ShoppingCart className="h-5 w-5" />
             {cart > 0 && <span className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-foreground text-xs font-bold text-background">{cart}</span>}
@@ -379,7 +379,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
   const subtotal = lines.reduce((t, p) => t + p.price * (items[p.amount] ?? 0), 0);
   const total = subtotal * (1 - discount);
   const setQty = (a: number, d: number) => setItems((it) => { const n = { ...it, [a]: (it[a] || 0) + d }; if ((n[a] ?? 0) <= 0) delete n[a]; return n; });
-  const api = "/api";
+  const api = "";
   async function generatePix() {
     if (loadingPix || !username.trim() || !lines.length || !acceptedTerms) return;
     setLoadingPix(true);
