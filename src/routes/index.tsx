@@ -46,7 +46,7 @@ const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", curren
 function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void }) {
   const soldOut = "soldOut" in p && p.soldOut;
   return (
-    <div className="w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border border-border bg-card shadow-gold">
+    <div className="w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border-2 border-purple-400/70 bg-gradient-to-br from-[#4c1d95] via-[#2e1065] to-[#160b2e] shadow-[0_0_28px_rgba(168,85,247,0.38)]">
       <img src={p.img} alt={`${p.amount} Robux`} width={1024} height={1536} loading="lazy" className="aspect-[2/3] w-full object-cover" />
       <div className="space-y-1.5 p-3">
         <h3 className="font-display text-base font-bold">{p.amount.toLocaleString("pt-BR")} ROBUX</h3>
@@ -69,7 +69,7 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
             Esgotado
           </button>
         ) : (
-          <button onClick={onAdd} className="w-full rounded-full bg-gold py-2.5 font-bold text-primary-foreground transition hover:brightness-110">
+          <button onClick={onAdd} className="w-full rounded-full bg-gradient-to-r from-[#c084fc] via-[#a855f7] to-[#7e22ce] py-2.5 font-bold text-white shadow-[0_0_16px_rgba(168,85,247,0.35)] transition hover:brightness-110">
             Comprar
           </button>
         )}
