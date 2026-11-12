@@ -79,7 +79,7 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
 }
 
 function Logo({ big }: { big?: boolean }) {
-  return <img src="https://i.postimg.cc/rw2wtRHX/1793307418253.png" alt="Kingdom Robux" className={big ? "w-52 max-w-full h-auto object-contain" : "h-20 sm:h-24 w-auto max-w-[280px] object-contain"} />;
+  return <img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className={big ? "w-52 max-w-full h-auto object-contain" : "h-20 sm:h-24 w-auto max-w-[280px] object-contain"} />;
 }
 
 const reviews: { name: string; text: string; img?: string }[] = [
@@ -288,7 +288,7 @@ export function Index() {
         <Checkout view={view} setView={setView} items={items} setItems={setItems} onAdd={add} />
       ) : (<>
 
-      <img src="/images/banner-prata.jpg?v=promocional-prata-20261029" alt="Kingdom Robux prata" className="mx-auto block w-full max-w-6xl h-auto" />
+      <img src="https://i.postimg.cc/tC7GSD5q/Dynastia-Robux-Os-Melhores-Precos.png" alt="Banner Dynastia Robux" className="mx-auto block w-full max-w-6xl h-auto" />
 
       <main className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="font-display text-4xl font-extrabold text-gold-grad">Promoções</h2>
