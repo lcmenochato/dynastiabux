@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-type Env = { VELANI_SECRET_KEY?: string; VELANI_PUBLIC_KEY?: string; VELANI_API_URL?: string; VERCEL_URL?: string };
+type Env = { FLEVO_API_KEY?: string; FLEVO_API_URL?: string; VERCEL_URL?: string };
 
 export const Route = createFileRoute("/api/create-pix")({
   server: {
@@ -8,50 +8,37 @@ export const Route = createFileRoute("/api/create-pix")({
       POST: async ({ request }) => {
         try {
           const env = (process.env ?? {}) as Env;
-          const secret = env.VELANI_SECRET_KEY;
-          if (!secret) {
-            return Response.json({ success: false, message: "Configure VELANI_SECRET_KEY na Vercel usando sua Secret Key da Velani (sk_live_...). A Public Key (pk_live_...) não cria cobranças." }, { status: 500 });
-          }
-          if (secret.startsWith("pk_live_")) {
-            return Response.json({ success: false, message: "A VELANI_SECRET_KEY está preenchida com uma Public Key (pk_live_...). Troque o valor dessa variável pela Secret Key (sk_live_...) no painel da Vercel." }, { status: 400 });
-          }
-          const input = await request.json() as {
-            email?: string; username?: string; amount?: number; product?: string;
-          };
+          const apiKey = env.FLEVO_API_KEY;
+          if (!apiKey) return Response.json({ success: false, message: "Configure FLEVO_API_KEY na Vercel com sua chave secreta da FlevoPay." }, { status: 500 });
+          const input = await request.json() as { email?: string; username?: string; amount?: number; product?: string; document?: string; phone?: string };
           const amount = Number(input.amount);
-          if (!Number.isFinite(amount) || amount < 1 || amount > 3000 || !input.email || !input.username) {
-            return Response.json({ success: false, message: "Confira seus dados e o valor do pedido." }, { status: 400 });
+          const document = String(input.document || "").replace(/\D/g, "");
+          const phone = String(input.phone || "").replace(/\D/g, "");
+          if (!Number.isFinite(amount) || amount < 1 || amount > 3000 || !input.email || !input.username || document.length !== 11 || phone.length < 10 || phone.length > 11) {
+            return Response.json({ success: false, message: "Confira e-mail, usuário Roblox, CPF, telefone e valor do pedido." }, { status: 400 });
           }
-
-          const base = (env.VELANI_API_URL || "https://api.velanipagamentos.com.br/api/v1/api-gateway").replace(/\/$/, "");
+          const base = (env.FLEVO_API_URL || "https://app.flevopay.com.br").replace(/\/$/, "");
           const origin = request.headers.get("origin") || (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : new URL(request.url).origin);
-          const externalId = `dynastia-${crypto.randomUUID()}`;
-          const response = await fetch(`${base}/v1/transactions`, {
+          const reference = `dynastia-${crypto.randomUUID()}`;
+          const response = await fetch(`${base}/api/v1/transaction`, {
             method: "POST",
-            headers: { "Content-Type": "application/json", "x-api-key": secret },
+            headers: { "Content-Type": "application/json", "X-API-Key": apiKey },
             body: JSON.stringify({
-              paymentMethod: "pix",
               amount: Math.round(amount * 100),
-              externalId,
-              postbackUrl: `${origin}/api/webhooks/velani`,
-              customer: { name: input.username.trim(), email: input.email.trim() },
-              metadata: { product: input.product || "Robux", store: "Dynastia Bux" }
+              description: input.product || "Robux - Dynastia Bux",
+              reference,
+              postback_url: `${origin}/api/webhooks/flevo`,
+              source: "api_externa",
+              customer: { name: input.username.trim(), email: input.email.trim(), document, phone }
             })
           });
-          const payload = await response.json() as { success?: boolean; message?: string; error?: string; data?: { id?: string; status?: string; pixQrCode?: string; qrCodeUrl?: string; copyPaste?: string } };
-          if (!response.ok || payload.success === false || !payload.data?.id) {
-            console.error("Velani create transaction:", response.status, payload);
-            return Response.json({ success: false, message: payload.message || payload.error || "A Velani não conseguiu criar a cobrança Pix." }, { status: 502 });
+          const payload = await response.json() as { status?: string; message?: string; success?: boolean; transaction_id?: string | number; id?: string | number; qr_code?: string; qr_code_base64?: string };
+          const paymentId = payload.transaction_id ?? payload.id;
+          if (!response.ok || payload.success === false || !paymentId || (!payload.qr_code && !payload.qr_code_base64)) {
+            console.error("FlevoPay create transaction:", response.status, payload);
+            return Response.json({ success: false, message: payload.message || "A FlevoPay não conseguiu criar a cobrança Pix." }, { status: 502 });
           }
-          return Response.json({
-            success: true,
-            paymentId: payload.data.id,
-            transactionId: payload.data.id,
-            pixCode: payload.data.pixQrCode || payload.data.copyPaste || "",
-            copyPaste: payload.data.pixQrCode || payload.data.copyPaste || "",
-            qrcodeUrl: payload.data.qrCodeUrl || "",
-            status: payload.data.status || "pending"
-          });
+          return Response.json({ success: true, paymentId: String(paymentId), transactionId: String(paymentId), pixCode: payload.qr_code || "", copyPaste: payload.qr_code || "", qrcodeUrl: payload.qr_code_base64 || "", status: payload.status || "pending" });
         } catch (error) {
           console.error("Create Pix error:", error);
           return Response.json({ success: false, message: "Erro interno ao gerar Pix. Tente novamente." }, { status: 500 });
