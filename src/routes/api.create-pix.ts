@@ -14,7 +14,7 @@ export const Route = createFileRoute("/api/create-pix")({
           const amount = Number(input.amount);
           const document = String(input.document || "").replace(/\D/g, "");
           const phone = String(input.phone || "").replace(/\D/g, "");
-          if (!Number.isFinite(amount) || amount < 1 || amount > 3000 || !input.email || !input.username || document.length !== 11 || phone.length < 10 || phone.length > 11) {
+          if (!Number.isFinite(amount) || amount < 1 || amount > 3000 || !input.email || !input.username || !input.customerName || document.length !== 11 || phone.length < 10 || phone.length > 11) {
             return Response.json({ success: false, message: "Confira e-mail, usuário Roblox, CPF, telefone e valor do pedido." }, { status: 400 });
           }
           const base = (env.FLEVO_API_URL || "https://app.flevopay.com.br").replace(/\/$/, "");
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/api/create-pix")({
               reference,
               postback_url: `${origin}/api/webhooks/flevo`,
               source: "api_externa",
-              customer: { name: input.username.trim(), email: input.email.trim(), document, phone }
+              customer: { name: input.customerName.trim(), email: input.email.trim(), document, phone }
             })
           });
           const payload = await response.json() as { status?: string; message?: string; success?: boolean; transaction_id?: string | number; id?: string | number; qr_code?: string; qr_code_base64?: string };
