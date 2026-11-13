@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-type Env = { FLEVO_API_KEY?: string; FLEVO_API_URL?: string; VERCEL_URL?: string };
+type Env = { FLEVO_API_KEY?: string; FLEVO_API_URL?: string; FLEVO_CUSTOMER_DOCUMENT?: string; FLEVO_CUSTOMER_PHONE?: string; VERCEL_URL?: string };
 
 export const Route = createFileRoute("/api/create-pix")({
   server: {
@@ -10,12 +10,15 @@ export const Route = createFileRoute("/api/create-pix")({
           const env = (process.env ?? {}) as Env;
           const apiKey = env.FLEVO_API_KEY;
           if (!apiKey) return Response.json({ success: false, message: "Configure FLEVO_API_KEY na Vercel com sua chave secreta da FlevoPay." }, { status: 500 });
-          const input = await request.json() as { email?: string; username?: string; amount?: number; product?: string; document?: string; phone?: string };
+          const input = await request.json() as { email?: string; username?: string; amount?: number; product?: string };
           const amount = Number(input.amount);
-          const document = String(input.document || "").replace(/\D/g, "");
-          const phone = String(input.phone || "").replace(/\D/g, "");
-          if (!Number.isFinite(amount) || amount < 1 || amount > 3000 || !input.email || !input.username || !input.customerName || document.length !== 11 || phone.length < 10 || phone.length > 11) {
-            return Response.json({ success: false, message: "Confira e-mail, usuário Roblox, CPF, telefone e valor do pedido." }, { status: 400 });
+          const document = String(env.FLEVO_CUSTOMER_DOCUMENT || "").replace(/\D/g, "");
+          const phone = String(env.FLEVO_CUSTOMER_PHONE || "").replace(/\D/g, "");
+          if (!Number.isFinite(amount) || amount < 1 || amount > 3000 || !input.email || !/\S+@\S+\.\S+/.test(input.email) || !input.username?.trim()) {
+            return Response.json({ success: false, message: "Confira seu e-mail, usuário Roblox e valor do pedido." }, { status: 400 });
+          }
+          if (![11, 14].includes(document.length) || phone.length < 10 || phone.length > 11) {
+            return Response.json({ success: false, message: "Configure FLEVO_CUSTOMER_DOCUMENT (CPF/CNPJ) e FLEVO_CUSTOMER_PHONE (com DDD) nas variáveis de ambiente da Vercel." }, { status: 500 });
           }
           const base = (env.FLEVO_API_URL || "https://app.flevopay.com.br").replace(/\/$/, "");
           const origin = request.headers.get("origin") || (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : new URL(request.url).origin);
@@ -29,7 +32,7 @@ export const Route = createFileRoute("/api/create-pix")({
               reference,
               postback_url: `${origin}/api/webhooks/flevo`,
               source: "api_externa",
-              customer: { name: input.customerName.trim(), email: input.email.trim(), document, phone }
+              customer: { name: input.username.trim(), email: input.email.trim(), document, phone }
             })
           });
           const payload = await response.json() as { status?: string; message?: string; success?: boolean; transaction_id?: string | number; id?: string | number; qr_code?: string; qr_code_base64?: string };
