@@ -367,6 +367,8 @@ type Items = Record<number, number>;
 function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" | "pix"; setView: (v: "home" | "checkout" | "pix") => void; items: Items; setItems: (f: (i: Items) => Items) => void; onAdd: (a: number) => void }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [document, setDocument] = useState("");
+  const [phone, setPhone] = useState("");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loadingPix, setLoadingPix] = useState(false);
   const [pixError, setPixError] = useState("");
@@ -390,6 +392,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           email: email.trim(), username: username.trim(),
+          document: document.replace(/\D/g, ""), phone: phone.replace(/\D/g, ""),
           amount: Number(total.toFixed(2)),
           product: lines.map(p => String(p.amount) + " Robux x" + String(items[p.amount])).join(", "),
           source: "kingdom-robux-new"
@@ -507,6 +510,10 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@email.com" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
         <label className="mt-5 block text-muted-foreground">Usuário Roblox *</label>
         <input autoComplete="off" spellCheck={false} value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Digite seu usuário Roblox" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none transition-colors duration-200 focus:border-primary" />
+        <label className="mt-5 block text-muted-foreground">CPF *</label>
+        <input inputMode="numeric" autoComplete="off" value={document} onChange={(e) => setDocument(e.target.value.replace(/\D/g, "").slice(0, 11))} placeholder="Somente números" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
+        <label className="mt-5 block text-muted-foreground">Telefone com DDD *</label>
+        <input type="tel" inputMode="numeric" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 11))} placeholder="(11) 99999-9999" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
       </div>
       <div className={card}>
         <h2 className="flex items-center gap-3 font-display text-2xl font-extrabold"><Lock className="h-6 w-6" /> Seus Produtos ({lines.length})</h2>
@@ -549,7 +556,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
             <span>Li e aceito os <a href="/#politicas-kingdom" target="_blank" rel="noopener noreferrer" className="text-foreground underline">termos</a> e a <a href="/#politicas-kingdom" target="_blank" rel="noopener noreferrer" className="text-foreground underline">política de privacidade</a>.</span>
           </label>
         </div>
-        <button disabled={!acceptedTerms || loadingPix || !lines.length || !username.trim() || !/\S+@\S+\.\S+/.test(email)} onClick={generatePix} className="mt-5 w-full rounded-full bg-gold py-4 font-display text-lg font-extrabold text-primary-foreground disabled:opacity-50">{loadingPix ? "GERANDO PIX..." : "FINALIZAR COMPRA"}</button>
+        <button disabled={!acceptedTerms || loadingPix || !lines.length || !username.trim() || document.replace(/\D/g, "").length !== 11 || phone.replace(/\D/g, "").length < 10 || !/\S+@\S+\.\S+/.test(email)} onClick={generatePix} className="mt-5 w-full rounded-full bg-gold py-4 font-display text-lg font-extrabold text-primary-foreground disabled:opacity-50">{loadingPix ? "GERANDO PIX..." : "FINALIZAR COMPRA"}</button>
         {pixError && <p role="alert" className="mt-3 text-center text-destructive">{pixError}</p>}
         {lines.length > 0 && !/\S+@\S+\.\S+/.test(email) && <p className="mt-2 text-center text-sm text-muted-foreground">Preencha seu email para continuar</p>}
       </div>
