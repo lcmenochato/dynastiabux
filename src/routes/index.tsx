@@ -157,13 +157,13 @@ function SupportPage() {
 }
 
 const recentPurchases = [
-  "yDarkx_gg",
-  "aninha_linda236",
-  "gabriel_txx5",
-  "EuMexmoo36",
-  "giovana_3883",
-  "fernandoblox64",
-  "nobruu_Apelao983",
+  { name: "yDarkx_gg", amount: "3.600 + 1.400", image: "https://i.postimg.cc/CxyDdnBb/file-000000004720820e96fffc337c6809b4.png" },
+  { name: "aninha_linda236", amount: "10.000 + 5.000", image: "https://i.postimg.cc/1tzVbp21/file-0000000070f0820e9e69a95a97920c59.png" },
+  { name: "gabriel_txx5", amount: "1.200", image: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
+  { name: "EuMexmoo36", amount: "7.000 + 3.500", image: "https://i.postimg.cc/pTd53D4t/Promo-Neon-Roblox-7000-Robux.png" },
+  { name: "giovana_3883", amount: "4.500 + 2.100", image: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
+  { name: "fernandoblox64", amount: "2.100", image: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
+  { name: "nobruu_Apelao983", amount: "1.700", image: "https://i.postimg.cc/YCcgjLGL/file-00000000fc10820eb49348f5b3585276.png" },
 ];
 function DemoPurchasePopup() {
   const [current, setCurrent] = useState(-1);
@@ -185,15 +185,15 @@ function DemoPurchasePopup() {
     }, 5000);
     return () => { clearTimeout(first); if (interval) clearInterval(interval); if (hideTimer) clearTimeout(hideTimer); };
   }, []);
-  const username = recentPurchases[current];
-  if (!username) return null;
+  const purchase = recentPurchases[current];
+  if (!purchase) return null;
   return (
     <aside aria-label="Notificação de compra" className={`pointer-events-none fixed bottom-5 left-3 z-40 w-[min(340px,calc(100vw-24px))] transition-all duration-1000 ease-in-out ${visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
       <div className="flex items-center gap-3 rounded-2xl border border-slate-500/50 bg-[#111214]/95 p-3 text-white shadow-2xl backdrop-blur">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-500/20 text-2xl" aria-hidden="true">🎁</div>
+        <img src={purchase.image} alt={`${purchase.amount} Robux`} className="h-20 w-14 shrink-0 rounded-lg object-cover" />
         <div className="min-w-0">
-          <p className="text-base font-bold">{username}</p>
-          <p className="mt-1 text-xs text-slate-400">fez uma compra na Dynastia Bux</p>
+          <p className="text-base font-bold">{purchase.name}</p>
+          <p className="mt-1 text-xs text-slate-400">comprou {purchase.amount} Robux</p>
         </div>
       </div>
     </aside>
