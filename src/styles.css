@@ -203,3 +203,47 @@
 .border-border { border-color: oklch(0.72 0.17 300 / 38%); }
 header { box-shadow: 0 5px 24px oklch(0.08 0.04 290 / 45%); }
 button.bg-gold, .bg-gold { background: var(--gradient-gold); }
+
+
+/* Neve natalina discreta: camadas leves, sem bloquear cliques. */
+.snowfall {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.34;
+}
+.snowfall::before,
+.snowfall::after {
+  content: "";
+  position: absolute;
+  inset: -120% 0 0;
+  background-repeat: repeat;
+  will-change: transform;
+}
+.snowfall::before {
+  opacity: 0.42;
+  background-image:
+    radial-gradient(2px 2px at 24px 38px, rgba(255,255,255,.82) 98%, transparent),
+    radial-gradient(1.5px 1.5px at 118px 92px, rgba(255,255,255,.72) 98%, transparent),
+    radial-gradient(1px 1px at 205px 18px, rgba(255,255,255,.65) 98%, transparent);
+  background-size: 260px 190px;
+  animation: dynastia-snow-fall 24s linear infinite;
+}
+.snowfall::after {
+  opacity: 0.28;
+  background-image:
+    radial-gradient(2.5px 2.5px at 62px 70px, rgba(255,255,255,.72) 98%, transparent),
+    radial-gradient(1px 1px at 172px 132px, rgba(255,255,255,.58) 98%, transparent);
+  background-size: 320px 250px;
+  animation: dynastia-snow-fall 34s linear infinite;
+}
+@keyframes dynastia-snow-fall {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(22px, 100vh, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .snowfall::before,
+  .snowfall::after { animation: none; }
+}
