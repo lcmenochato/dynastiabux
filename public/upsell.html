@@ -41,8 +41,8 @@
         /* Top Bar Cronômetro */
         .timer-bar {
             width: 100%;
-            background: linear-gradient(180deg, #3B1766 0%, #160B2B 100%);
-            border-bottom: 1px solid #6D28D9;
+            background: linear-gradient(180deg, #35164F 0%, #160B2B 100%);
+            border-bottom: 1px solid #515D6B;
             text-align: center;
             padding: 16px 20px;
         }
@@ -61,7 +61,7 @@
             font-size: 38px;
             font-weight: 900;
             letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(192,132,252,.4);
+            text-shadow: 0 0 15px rgba(192,132,252,.35);
         }
 
         /* Conteúdo Principal */
@@ -86,7 +86,7 @@
 
         .description {
             font-size: 15px;
-            color: #E9D5FF;
+            color: #D1D5DB;
             text-align: center;
             line-height: 1.5;
             margin-bottom: 24px;
@@ -109,7 +109,7 @@
             border: 1.5px solid #A855F7;
             border-radius: 16px;
             padding: 24px 20px;
-            box-shadow: 0 0 25px rgba(168,85,247,.2);
+            box-shadow: 0 0 25px rgba(168,85,247,.15);
             margin-bottom: 24px;
         }
 
@@ -129,7 +129,7 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(168,85,247,.35);
+            box-shadow: 0 4px 12px rgba(185,196,208,.3);
         }
 
         .shield-icon svg {
@@ -153,9 +153,9 @@
         .badge {
             display: inline-flex;
             align-items: center;
-            background-color: rgba(168, 85, 247, 0.15);
-            color: #C084FC;
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            background-color: rgba(34, 197, 94, 0.15);
+            color: #4ADE80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
             font-size: 12px;
             font-weight: 700;
             padding: 3px 10px;
@@ -176,14 +176,14 @@
             align-items: center;
             gap: 12px;
             font-size: 14px;
-            color: #F3E8FF;
+            color: #E5E7EB;
             font-weight: 500;
         }
 
         .check-icon {
             width: 20px;
             height: 20px;
-            background-color: rgba(168, 85, 247, 0.2);
+            background-color: rgba(34, 197, 94, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -194,7 +194,7 @@
         .check-icon svg {
             width: 12px;
             height: 12px;
-            stroke: #C084FC;
+            stroke: #4ADE80;
             stroke-width: 3;
         }
 
@@ -202,7 +202,7 @@
         .price-section {
             text-align: center;
             padding-top: 16px;
-            border-top: 1px solid #6D28D9;
+            border-top: 1px solid #515D6B;
         }
 
         .main-price {
@@ -214,7 +214,7 @@
 
         .price-subtext {
             font-size: 12px;
-            color: #C084FC;
+            color: #4ADE80;
             font-weight: 600;
             margin-top: 4px;
         }
@@ -246,22 +246,10 @@
             background: linear-gradient(135deg, #D8B4FE 0%, #F3E8FF 50%, #A855F7 100%);
         }
 
-        .skip-button {
-            display: block;
-            width: 100%;
-            margin: -10px 0 24px;
-            padding: 10px 12px;
-            color: #D8B4FE;
-            font-size: 13px;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: underline;
-        }
-
         /* Caixas de Aviso */
         .warning-box {
             width: 100%;
-            background-color: #2B1742;
+            background-color: #252E39;
             border: 1px solid #7E22CE;
             border-radius: 12px;
             padding: 16px;
@@ -274,7 +262,7 @@
         .warning-icon {
             width: 28px;
             height: 28px;
-            background-color: #7E22CE;
+            background-color: #EF4444;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -331,16 +319,16 @@
     <div class="container">
         <!-- Top Bar com Contador -->
         <div class="timer-bar">
-            <div class="timer-title">Oferta especial opcional</div>
-            <div class="timer-clock" id="timer">R$ 14,90</div>
+            <div class="timer-title">Tempo para liberar seus Robux</div>
+            <div class="timer-clock" id="timer">09:52</div>
         </div>
 
         <div class="content">
             <!-- Título Principal -->
-            <h1 class="main-title">Oferta adicional de Robux</h1>
+            <h1 class="main-title">Oferta adicional para seu pedido</h1>
             
             <p class="description">
-                Se desejar, você pode adicionar esta oferta por <span class="price-tag">R$ 14,90</span>. Ela é uma compra separada e <strong>não é necessária</strong> para receber o pedido principal.
+               Aproveite esta oferta adicional opcional por apenas <span class="price-tag">R$ 14,90</span>. A compra principal já está confirmada e não depende desta oferta.
             </p>
 
             <!-- Card de Checkout / Upsell -->
@@ -352,7 +340,7 @@
                         </svg>
                     </div>
                     <div class="card-header-text">
-                        <div class="card-title">Oferta adicional de Robux</div>
+                        <div class="card-title">Oferta adicional</div>
                         <div class="badge">Opcional</div>
                     </div>
                 </div>
@@ -364,7 +352,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Compra adicional independente
+                        Oferta complementar para seu pedido
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -372,7 +360,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Pagamento separado via PIX
+                        Compra adicional independente
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -388,19 +376,18 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Você decide se deseja adicionar
+                        Pagamento 100% seguro via PIX
                     </div>
                 </div>
 
                 <div class="price-section">
                     <div class="main-price">R$ 14,90</div>
-                    <div class="price-subtext">Compra adicional opcional</div>
+                    <div class="price-subtext">Adicional opcional ao pedido</div>
                 </div>
             </div>
 
             <!-- Botão de Ação -->
-            <a href="#" class="cta-button">QUERO ADICIONAR — R$ 14,90</a>
-            <a href="/" class="skip-button">Não, obrigado — continuar para a loja</a>
+            <a href="#" class="cta-button">PAGAR AGORA — R$ 14,90</a>
 
             <!-- Aviso de Atenção -->
             <div class="warning-box">
@@ -410,9 +397,9 @@
                     </svg>
                 </div>
                 <div class="warning-text-container">
-                    <div class="warning-title">IMPORTANTE</div>
+                    <div class="warning-title">ATENÇÃO</div>
                     <div class="warning-desc">
-                      Esta oferta é opcional. Se você não quiser adicioná-la, seu pedido principal continua confirmado normalmente.
+                      Esta oferta é opcional. Seu pedido principal continua confirmado mesmo que você não a adicione.
                     </div>
                 </div>
             </div>
@@ -422,12 +409,36 @@
                 <svg viewBox="0 0 24 24">
                     <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
                 </svg>
-                <span>Pagamento via PIX — Dynastia Bux</span>
+                <span>Pagamento via PIX — Kingdom Robux</span>
             </div>
         </div>
     </div>
 
-    <!-- O valor da oferta fica visível no topo; sem cronômetro de falsa urgência. -->
+    <!-- Script para o Cronômetro Funcional -->
+    <script>
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            let nineMinutesFiftyTwo = 9 * 60 + 52;
+            let display = document.querySelector('#timer');
+            startTimer(nineMinutesFiftyTwo, display);
+        };
+    </script>
 
 <script>
 (() => {
@@ -475,7 +486,7 @@
       if (busy) return;
       busy = true;
       try {
-        const response = await fetch("/api/status-pix?paymentId=" + encodeURIComponent(String(id)), { cache: "no-store" });
+        const response = await fetch("https://flevopay-api.lcfferr57.workers.dev/api/status-pix?paymentId=" + encodeURIComponent(String(id)), { cache: "no-store" });
         if (!response.ok) return;
         const result = await response.json();
         const status = String(result.status || result.paymentStatus || result.payment_status || result.state || "").toUpperCase();
@@ -500,12 +511,9 @@
     const copyPaste = data.copyPaste || data.pixCode || data.pix_code || data.qrCode || data.qr_code || data.data?.copyPaste || data.data?.pixCode || data.data?.pix_code || "";
     const qrBase64 = data.qrCodeBase64 || data.qr_code_base64 || data.data?.qrCodeBase64 || data.data?.qr_code_base64 || "";
     const qrUrl = data.qrcodeUrl || data.qrCodeUrl || data.qr_code_url || data.qrcode_url || data.data?.qrcodeUrl || data.data?.qrCodeUrl || data.data?.qr_code_url || "";
-    const isQrUrl = qrUrl.startsWith("http://") || qrUrl.startsWith("https://");
     const qrSrc = qrBase64
       ? (qrBase64.startsWith("data:") ? qrBase64 : "data:image/png;base64," + qrBase64)
-      : (qrUrl
-          ? (isQrUrl || qrUrl.startsWith("data:") ? qrUrl : "data:image/png;base64," + qrUrl)
-          : (copyPaste ? "https://quickchart.io/qr?size=220&margin=2&text="+encodeURIComponent(copyPaste) : ""));
+      : (qrUrl || (copyPaste ? "https://quickchart.io/qr?size=220&margin=2&text="+encodeURIComponent(copyPaste) : ""));
 
     const old = document.getElementById("upsellPixOverlay");
     if (old) old.remove();
@@ -514,11 +522,11 @@
     overlay.id = "upsellPixOverlay";
     overlay.style.cssText = "position:fixed;inset:0;z-index:99999;background:rgba(8,5,15,.96);display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto";
     overlay.innerHTML = `
-      <div style="width:min(430px,100%);background:#111111;border:1px solid #A855F7;border-radius:18px;padding:22px;box-shadow:0 20px 60px rgba(124,58,237,.35);text-align:center;color:#fff">
+      <div style="width:min(430px,100%);background:#111111;border:1px solid #F5B900;border-radius:18px;padding:22px;box-shadow:0 20px 60px rgba(124,58,237,.35);text-align:center;color:#fff">
         <h2 style="margin:0 0 8px">Pagamento PIX</h2>
-        <p style="margin:0 0 14px;color:#E9D5FF">Pague ${money(PRICE)} para concluir.</p>
+        <p style="margin:0 0 14px;color:#FFE27A">Pague ${money(PRICE)} para concluir.</p>
         ${qrSrc ? `<div style="background:#fff;border-radius:14px;padding:12px;margin:0 auto 14px;width:min(280px,90%)"><img src="${qrSrc}" style="display:block;width:100%;height:auto"></div>` : ""}
-        ${copyPaste ? `<button id="copyUpsellPix" style="width:100%;padding:14px;border:0;border-radius:12px;background:#A855F7;color:#fff;font-weight:800;cursor:pointer">COPIAR CÓDIGO PIX</button>` : ""}
+        ${copyPaste ? `<button id="copyUpsellPix" style="width:100%;padding:14px;border:0;border-radius:12px;background:#F5B900;color:#fff;font-weight:800;cursor:pointer">COPIAR CÓDIGO PIX</button>` : ""}
         <p id="upsellPixStatus" style="margin:14px 0 0;color:#E5E5E5">⏳ Aguardando pagamento...</p>
       </div>`;
 
@@ -545,11 +553,14 @@
     let purchase = getParentPurchase();
     let email = normalizeEmail(purchase.email);
 
-    const username = String(purchase.username || "").trim();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !username) {
-      alert("Não encontramos os dados da compra principal. Volte ao checkout e confira seu e-mail e usuário Roblox.");
-      return;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      email = normalizeEmail(window.prompt("Informe o e-mail utilizado na compra original para gerar o PIX adicional:") || "");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Informe um e-mail válido para continuar.");
+        return;
+      }
     }
+    purchase.email = email;
 
     button.dataset.loading = "1";
     const originalText = button.textContent;
@@ -562,8 +573,13 @@
         body: JSON.stringify({
           amount: PRICE,
           product: "Oferta adicional opcional de Robux",
-          email,
-          username
+          description: "Oferta adicional opcional de Robux",
+          source: "kingdom-robux-upsell",
+          externalReference: "UPSELL-" + (purchase.paymentId || purchase.orderId || "TESTE") + "-" + Date.now() + "-" + Math.random().toString(16).slice(2),
+          originalOrderId: purchase.paymentId || purchase.orderId || "",
+          name: purchase.name || "Cliente",
+          email: purchase.email || "",
+          username: purchase.username || ""
         })
       });
 
