@@ -247,3 +247,20 @@ button.bg-gold, .bg-gold { background: var(--gradient-gold); }
   .snowfall::before,
   .snowfall::after { animation: none; }
 }
+
+
+/* Moldura natalina ilustrada nos cantos da imagem dos produtos. */
+.dynastia-christmas-card::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%232d7545' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M3 3 Q18 4 27 18 T57 31 M197 3 Q182 4 173 18 T143 31 M3 297 Q18 296 27 282 T57 269 M197 297 Q182 296 173 282 T143 269'/%3E%3C/g%3E%3Cg fill='%233d9657' stroke='%231b5634' stroke-width='.8'%3E%3Cpath d='M8 7l-7-5 12 2-3-8 9 10 8-7-3 12 12 1-13 5 4 10-12-8-7 9 2-13-10-2z M192 7l7-5-12 2 3-8-9 10-8-7 3 12-12 1 13 5-4 10 12-8 7 9-2-13 10-2z M8 293l-7 5 12-2-3 8 9-10 8 7-3-12 12-1-13-5 4-10-12 8-7-9 2 13-10 2z M192 293l7 5-12-2 3 8-9-10-8 7 3-12-12-1 13-5-4-10 12 8 7-9-2 13 10 2z'/%3E%3C/g%3E%3Cg fill='%23c52f50' stroke='%237b1830' stroke-width='1.2'%3E%3Cpath d='M14 265c-14-14-16 8-1 12 5 1 8-3 10-7 2 4 6 8 11 7 15-4 13-26-1-12l-10 8z'/%3E%3Cpath d='M186 265c14-14 16 8 1 12-5 1-8-3-10-7-2 4-6 8-11 7-15-4-13-26 1-12l10 8z'/%3E%3C/g%3E%3Cg fill='%23f2c76b' stroke='%238d642c' stroke-width='1'%3E%3Ccircle cx='28' cy='38' r='5'/%3E%3Ccircle cx='172' cy='38' r='5'/%3E%3Ccircle cx='30' cy='245' r='4'/%3E%3Ccircle cx='170' cy='245' r='4'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: .98;
+}
