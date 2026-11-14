@@ -390,7 +390,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-          email: email.trim(), customerName: customerName.trim(), username: username.trim(),
+          email: email.trim(), username: customerName.trim(), robloxUsername: username.trim(),
           amount: Number(total.toFixed(2)),
           product: lines.map(p => String(p.amount) + " Robux x" + String(items[p.amount])).join(", "),
           source: "kingdom-robux-new"
