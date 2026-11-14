@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const products = [
+const products: { amount: number; bonus?: number; price: number; old: number; img: string; soldOut?: boolean }[] = [
   { amount: 700, price: 0, old: 0, img: "/images/robux-700.png?v=prata-esgotado-20261029", soldOut: true },
   { amount: 1200, price: 19.9, old: 24, img: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
   { amount: 1700, price: 24.9, old: 32, img: "https://i.postimg.cc/YCcgjLGL/file-00000000fc10820eb49348f5b3585276.png" },
