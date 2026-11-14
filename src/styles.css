@@ -248,30 +248,29 @@ button.bg-gold, .bg-gold { background: var(--gradient-gold); }
   .snowfall::after { animation: none; }
 }
 
-/* Enfeites natalinos somente nas bordas dos cards de produto. */
+/* Enfeites natalinos discretos somente nas laterais dos cards de produto. */
 .dynastia-christmas-card::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 8px;
   z-index: 2;
   pointer-events: none;
   background:
-    radial-gradient(circle, #ffe9a6 0 2px, #f6c85d 2.5px, transparent 4px) 5px 18px / 100% 34px repeat-y,
-    radial-gradient(circle, #ffe9a6 0 2px, #f6c85d 2.5px, transparent 4px) calc(100% - 5px) 18px / 100% 34px repeat-y,
-    radial-gradient(ellipse at 0 0, rgba(35,105,58,.95) 0 3px, transparent 4px) top left / 28px 28px no-repeat,
-    radial-gradient(ellipse at 100% 0, rgba(35,105,58,.95) 0 3px, transparent 4px) top right / 28px 28px no-repeat,
-    radial-gradient(ellipse at 0 100%, rgba(35,105,58,.95) 0 3px, transparent 4px) bottom left / 28px 28px no-repeat,
-    radial-gradient(ellipse at 100% 100%, rgba(35,105,58,.95) 0 3px, transparent 4px) bottom right / 28px 28px no-repeat;
-  opacity: .9;
+    radial-gradient(circle, #ffe7a0 0 2px, rgba(255, 205, 91, .45) 2.5px, transparent 4px) left center / 8px 42px repeat-y,
+    radial-gradient(circle, #ffe7a0 0 2px, rgba(255, 205, 91, .45) 2.5px, transparent 4px) right center / 8px 42px repeat-y;
+  opacity: .82;
 }
 .dynastia-christmas-card::after {
-  content: "🎀";
+  content: "";
   position: absolute;
+  inset: 5px;
   z-index: 3;
-  right: 5px;
-  bottom: 5px;
   pointer-events: none;
-  font-size: 23px;
-  line-height: 1;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.8));
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 3px 3px, #246b3e 0 3px, transparent 4px),
+    radial-gradient(ellipse at calc(100% - 3px) 3px, #246b3e 0 3px, transparent 4px),
+    radial-gradient(ellipse at 3px calc(100% - 3px), #246b3e 0 3px, transparent 4px),
+    radial-gradient(ellipse at calc(100% - 3px) calc(100% - 3px), #246b3e 0 3px, transparent 4px);
+  opacity: .7;
 }
