@@ -51,7 +51,7 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
       <img src={p.img} alt={`${p.amount} Robux`} width={1024} height={1536} loading="lazy" className="aspect-[2/3] w-full object-cover" />
       <div className="space-y-1.5 p-3">
         <h3 className="font-display text-base font-extrabold leading-tight">{p.amount.toLocaleString("pt-BR")}{p.bonus ? ` + ${p.bonus.toLocaleString("pt-BR")}` : ""}</h3>
-        {p.bonus && <p className="-mt-1 text-[11px] font-bold uppercase tracking-wide text-purple-200">Robux + bônus de Natal</p>}
+        {p.bonus && <p className="-mt-1 text-[11px] font-bold uppercase tracking-wide text-purple-200">ROBUX</p>}
         <div className="flex items-center gap-1 text-primary">
           {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-current" />)}
           <span className="ml-1 text-sm text-muted-foreground">({40 + p.amount % 97})</span>
@@ -81,8 +81,8 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
 }
 
 function Logo({ big }: { big?: boolean }) {
-  if (big) return <div className="flex h-28 w-52 max-w-full items-center justify-center overflow-hidden"><img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className="h-full w-full scale-[1.18] object-contain" /></div>;
-  return <img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className="h-20 w-auto max-w-[280px] object-contain sm:h-24" />;
+  if (big) return <div className="flex h-28 w-52 max-w-full items-center justify-center overflow-hidden"><img src="https://i.postimg.cc/X75Qwry8/1794667189518.png" alt="Dynastia Robux" className="h-full w-full scale-[1.18] object-contain" /></div>;
+  return <img src="https://i.postimg.cc/HkC33TQ0/file-000000004324820ea35e3aadfd992a62.png" alt="Dynastia Robux" className="h-20 w-auto max-w-[280px] object-contain sm:h-24" />;
 }
 
 const reviews: { name: string; text: string; img?: string }[] = [
@@ -291,7 +291,7 @@ export function Index() {
         <Checkout view={view} setView={setView} items={items} setItems={setItems} onAdd={add} />
       ) : (<>
 
-      <img src="https://i.postimg.cc/tC7GSD5q/Dynastia-Robux-Os-Melhores-Precos.png" alt="Banner Dynastia Robux" className="mx-auto block w-full max-w-6xl h-auto" />
+      <img src="https://i.postimg.cc/HkC33TQ0/file-000000004324820ea35e3aadfd992a62.png" alt="Banner Dynastia Robux" className="mx-auto block w-full max-w-6xl h-auto" />
 
       <main className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="font-display text-4xl font-extrabold text-gold-grad">Promoções de Natal 🎄</h2>
@@ -418,7 +418,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         body: JSON.stringify({
           email: email.trim(), username: username.trim(),
           amount: Number(total.toFixed(2)),
-          product: lines.map(p => String(p.amount) + " Robux" + (p.bonus ? " + " + String(p.bonus) + " bônus de Natal" : "") + " x" + String(items[p.amount])).join(", "),
+          product: lines.map(p => String(p.amount) + (p.bonus ? " + " + String(p.bonus) : "") + " ROBUX x" + String(items[p.amount])).join(", "),
           source: "kingdom-robux-new"
         })
       });
@@ -548,7 +548,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         {lines.map((p) => (
           <div key={p.amount} className="mt-4 flex items-center gap-3 rounded-2xl border border-border bg-muted p-3">
             <img src={p.img} alt="" className="h-16 w-12 rounded-lg object-cover" />
-            <div className="flex-1"><p className="font-bold">{p.amount.toLocaleString("pt-BR")}{p.bonus ? ` + ${p.bonus.toLocaleString("pt-BR")} BÔNUS DE NATAL` : " ROBUX"}</p><p className="text-primary">{brl(p.price)}</p></div>
+            <div className="flex-1"><p className="font-bold">{p.amount.toLocaleString("pt-BR")}{p.bonus ? ` + ${p.bonus.toLocaleString("pt-BR")}` : ""} ROBUX</p><p className="text-primary">{brl(p.price)}</p></div>
             <button aria-label="Menos" onClick={() => setQty(p.amount, -1)} className="grid h-8 w-8 place-items-center rounded-full bg-destructive text-destructive-foreground"><Minus className="h-4 w-4" /></button>
             <span className="w-5 text-center font-bold">{items[p.amount]}</span>
             <button aria-label="Mais" onClick={() => setQty(p.amount, 1)} className="grid h-8 w-8 place-items-center rounded-full bg-success text-success-foreground"><Plus className="h-4 w-4" /></button>
