@@ -366,6 +366,7 @@ export function Index() {
 type Items = Record<number, number>;
 function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" | "pix"; setView: (v: "home" | "checkout" | "pix") => void; items: Items; setItems: (f: (i: Items) => Items) => void; onAdd: (a: number) => void }) {
   const [email, setEmail] = useState("");
+  const [customerName, setCustomerName] = useState("");
   const [username, setUsername] = useState("");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loadingPix, setLoadingPix] = useState(false);
@@ -381,7 +382,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
   const setQty = (a: number, d: number) => setItems((it) => { const n = { ...it, [a]: (it[a] || 0) + d }; if ((n[a] ?? 0) <= 0) delete n[a]; return n; });
   const api = "";
   async function generatePix() {
-    if (loadingPix || !username.trim() || !lines.length || !acceptedTerms) return;
+    if (loadingPix || !customerName.trim() || !username.trim() || !lines.length || !acceptedTerms) return;
     setLoadingPix(true);
     setPixError("");
     try {
@@ -389,7 +390,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-          email: email.trim(), username: username.trim(),
+          email: email.trim(), customerName: customerName.trim(), username: username.trim(),
           amount: Number(total.toFixed(2)),
           product: lines.map(p => String(p.amount) + " Robux x" + String(items[p.amount])).join(", "),
           source: "kingdom-robux-new"
@@ -429,7 +430,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       paymentId: payment!.id,
       email: email.trim(),
       username: username.trim(),
-      name: username.trim(),
+      name: customerName.trim(),
       amount: payment!.amount
     });
     window.sessionStorage.setItem("kingdom_original_purchase", originalPurchase);
@@ -503,6 +504,8 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       </div>
       <div className={card}>
         <h2 className="flex items-center gap-3 font-display text-2xl font-extrabold"><User className="h-6 w-6" /> Seus Dados</h2>
+        <label className="mt-5 block text-muted-foreground">Como devemos te chamar? *</label>
+        <input type="text" autoComplete="name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Digite seu nome completo" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
         <label className="mt-5 block text-muted-foreground">Email *</label>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@email.com" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
         <label className="mt-5 block text-muted-foreground">Usuário Roblox *</label>
@@ -549,7 +552,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
             <span>Li e aceito os <a href="/#politicas-kingdom" target="_blank" rel="noopener noreferrer" className="text-foreground underline">termos</a> e a <a href="/#politicas-kingdom" target="_blank" rel="noopener noreferrer" className="text-foreground underline">política de privacidade</a>.</span>
           </label>
         </div>
-        <button disabled={!acceptedTerms || loadingPix || !lines.length || !username.trim() || !/\S+@\S+\.\S+/.test(email)} onClick={generatePix} className="mt-5 w-full rounded-full bg-gold py-4 font-display text-lg font-extrabold text-primary-foreground disabled:opacity-50">{loadingPix ? "GERANDO PIX..." : "FINALIZAR COMPRA"}</button>
+        <button disabled={!acceptedTerms || loadingPix || !lines.length || !customerName.trim() || !username.trim() || !/\S+@\S+\.\S+/.test(email)} onClick={generatePix} className="mt-5 w-full rounded-full bg-gold py-4 font-display text-lg font-extrabold text-primary-foreground disabled:opacity-50">{loadingPix ? "GERANDO PIX..." : "FINALIZAR COMPRA"}</button>
         {pixError && <p role="alert" className="mt-3 text-center text-destructive">{pixError}</p>}
         {lines.length > 0 && !/\S+@\S+\.\S+/.test(email) && <p className="mt-2 text-center text-sm text-muted-foreground">Preencha seu email para continuar</p>}
       </div>
