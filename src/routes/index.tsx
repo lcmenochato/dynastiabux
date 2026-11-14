@@ -36,20 +36,22 @@ const products = [
   { amount: 1200, price: 19.9, old: 24, img: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
   { amount: 1700, price: 24.9, old: 32, img: "https://i.postimg.cc/YCcgjLGL/file-00000000fc10820eb49348f5b3585276.png" },
   { amount: 2100, price: 29.9, old: 39, img: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
-  { amount: 3600, price: 44.9, old: 59, img: "https://i.postimg.cc/CxyDdnBb/file-000000004720820e96fffc337c6809b4.png" },
-  { amount: 4500, price: 59.9, old: 79, img: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
-  { amount: 7000, price: 89.9, old: 119, img: "https://i.postimg.cc/pTd53D4t/Promo-Neon-Roblox-7000-Robux.png" },
-  { amount: 10000, price: 119.9, old: 159, img: "https://i.postimg.cc/1tzVbp21/file-0000000070f0820e9e69a95a97920c59.png" },
+  { amount: 3600, bonus: 1400, price: 44.9, old: 59, img: "https://i.postimg.cc/CxyDdnBb/file-000000004720820e96fffc337c6809b4.png" },
+  { amount: 4500, bonus: 2100, price: 59.9, old: 79, img: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
+  { amount: 7000, bonus: 3500, price: 89.9, old: 119, img: "https://i.postimg.cc/pTd53D4t/Promo-Neon-Roblox-7000-Robux.png" },
+  { amount: 10000, bonus: 5000, price: 119.9, old: 159, img: "https://i.postimg.cc/1tzVbp21/file-0000000070f0820e9e69a95a97920c59.png" },
 ];
 const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void }) {
   const soldOut = "soldOut" in p && p.soldOut;
   return (
-    <div className="w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border-2 border-purple-400/70 bg-gradient-to-br from-[#4c1d95] via-[#2e1065] to-[#160b2e] shadow-[0_0_28px_rgba(168,85,247,0.38)]">
+    <div className="relative w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border-2 border-purple-400/70 bg-gradient-to-br from-[#4c1d95] via-[#2e1065] to-[#160b2e] shadow-[0_0_28px_rgba(168,85,247,0.38)]">
+      {p.bonus && <span className="pointer-events-none absolute right-2 top-2 z-[1] rounded-full border border-white/20 bg-[#32105c]/85 px-2.5 py-1 text-[10px] font-extrabold tracking-wide text-purple-100 shadow-lg backdrop-blur-sm">🎄 NATAL</span>}
       <img src={p.img} alt={`${p.amount} Robux`} width={1024} height={1536} loading="lazy" className="aspect-[2/3] w-full object-cover" />
       <div className="space-y-1.5 p-3">
-        <h3 className="font-display text-base font-bold">{p.amount.toLocaleString("pt-BR")} ROBUX</h3>
+        <h3 className="font-display text-base font-extrabold leading-tight">{p.amount.toLocaleString("pt-BR")}{p.bonus ? ` + ${p.bonus.toLocaleString("pt-BR")}` : ""}</h3>
+        {p.bonus && <p className="-mt-1 text-[11px] font-bold uppercase tracking-wide text-purple-200">Robux + bônus de Natal</p>}
         <div className="flex items-center gap-1 text-primary">
           {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-current" />)}
           <span className="ml-1 text-sm text-muted-foreground">({40 + p.amount % 97})</span>
@@ -253,7 +255,7 @@ export function Index() {
 
   return (
     <div className="min-h-screen bg-kingdom font-sans">
-      
+      <div className="snowfall" aria-hidden="true" />
       {view === "home" && <DemoPurchasePopup />}
       <div className="overflow-hidden bg-gold py-2 text-primary-foreground">
         <div className="flex w-max animate-marquee whitespace-pre font-display text-sm font-extrabold">
@@ -292,7 +294,7 @@ export function Index() {
       <img src="https://i.postimg.cc/tC7GSD5q/Dynastia-Robux-Os-Melhores-Precos.png" alt="Banner Dynastia Robux" className="mx-auto block w-full max-w-6xl h-auto" />
 
       <main className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="font-display text-4xl font-extrabold text-gold-grad">Promoções</h2>
+        <h2 className="font-display text-4xl font-extrabold text-gold-grad">Promoções de Natal 🎄</h2>
         <div className="mt-2 h-1 w-48 rounded-full bg-gold" />
         <div ref={productScrollRef} onScroll={loopProductScroll} className="-mx-4 mt-8 flex gap-5 overflow-x-auto px-4 pb-4">
           {(list.length ? [0, 1, 2].flatMap((copy) => list.map((p) => ({ p, copy }))) : []).map(({ p, copy }) => <ProductCard key={`${copy}-${p.amount}`} p={p} onAdd={() => add(p.amount)} />)}
@@ -416,7 +418,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         body: JSON.stringify({
           email: email.trim(), username: username.trim(),
           amount: Number(total.toFixed(2)),
-          product: lines.map(p => String(p.amount) + " Robux x" + String(items[p.amount])).join(", "),
+          product: lines.map(p => String(p.amount) + " Robux" + (p.bonus ? " + " + String(p.bonus) + " bônus de Natal" : "") + " x" + String(items[p.amount])).join(", "),
           source: "kingdom-robux-new"
         })
       });
@@ -546,7 +548,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         {lines.map((p) => (
           <div key={p.amount} className="mt-4 flex items-center gap-3 rounded-2xl border border-border bg-muted p-3">
             <img src={p.img} alt="" className="h-16 w-12 rounded-lg object-cover" />
-            <div className="flex-1"><p className="font-bold">{p.amount.toLocaleString("pt-BR")} ROBUX</p><p className="text-primary">{brl(p.price)}</p></div>
+            <div className="flex-1"><p className="font-bold">{p.amount.toLocaleString("pt-BR")}{p.bonus ? ` + ${p.bonus.toLocaleString("pt-BR")} BÔNUS DE NATAL` : " ROBUX"}</p><p className="text-primary">{brl(p.price)}</p></div>
             <button aria-label="Menos" onClick={() => setQty(p.amount, -1)} className="grid h-8 w-8 place-items-center rounded-full bg-destructive text-destructive-foreground"><Minus className="h-4 w-4" /></button>
             <span className="w-5 text-center font-bold">{items[p.amount]}</span>
             <button aria-label="Mais" onClick={() => setQty(p.amount, 1)} className="grid h-8 w-8 place-items-center rounded-full bg-success text-success-foreground"><Plus className="h-4 w-4" /></button>
