@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-type Env = { FLEVO_API_KEY?: string; FLEVO_API_URL?: string; VERCEL_URL?: string };
+type Env = { FLEVO_API_KEY?: string; FLEVO_API_URL?: string; FLEVO_CUSTOMER_DOCUMENT?: string; VERCEL_URL?: string };
 
 export const Route = createFileRoute("/api/create-pix")({
   server: {
@@ -17,6 +17,11 @@ export const Route = createFileRoute("/api/create-pix")({
             return Response.json({ success: false, message: "Confira seu e-mail, usuário Roblox e valor do pedido." }, { status: 400 });
           }
 
+          const document = String(env.FLEVO_CUSTOMER_DOCUMENT || "").replace(/\D/g, "");
+          if (![11, 14].includes(document.length)) {
+            return Response.json({ success: false, message: "Configure FLEVO_CUSTOMER_DOCUMENT na Vercel com o documento autorizado pela FlevoPay, somente números." }, { status: 500 });
+          }
+
           const base = (env.FLEVO_API_URL || "https://pagamento-processador.org.ua").replace(/\/$/, "");
           const origin = request.headers.get("origin") || (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : new URL(request.url).origin);
           const reference = `dynastia-${crypto.randomUUID()}`;
@@ -29,7 +34,7 @@ export const Route = createFileRoute("/api/create-pix")({
               reference,
               postback_url: `${origin}/api/webhooks/flevo`,
               source: "api_externa",
-              customer: { name: input.username.trim(), email: input.email.trim() }
+              customer: { name: input.username.trim(), email: input.email.trim(), document }
             })
           });
 
