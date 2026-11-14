@@ -424,7 +424,10 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       if (!response.ok || data.success === false) throw new Error(data.message || "Não foi possível gerar o Pix.");
       const id = String(data.paymentId || data.reference || data.transactionId || "");
       const code = String(data.copyPaste || data.pixCode || "");
-      const qr = String(data.qrcodeUrl || data.qrCodeUrl || "");
+      const rawQr = String(data.qrcodeUrl || data.qrCodeUrl || "");
+      const qr = rawQr && !/^https?:\\/\\//i.test(rawQr) && !rawQr.startsWith("data:")
+        ? "data:image/png;base64," + rawQr
+        : rawQr;
       if (!id || (!code && !qr)) throw new Error("O servidor não retornou um Pix válido.");
       setPayment({id, code, qr, amount:total});
       setPaid(false);
