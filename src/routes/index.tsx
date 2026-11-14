@@ -156,17 +156,14 @@ function SupportPage() {
   );
 }
 
-const demoPurchases = [
-  { name: "Julia", amount: 4500, image: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
-  { name: "Gustavo", amount: 2100, image: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
-  { name: "Roberto", amount: 1200, image: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
-  { name: "Ana", amount: 1700, image: "https://i.postimg.cc/YCcgjLGL/file-00000000fc10820eb49348f5b3585276.png" },
-  { name: "Lucas", amount: 3600, image: "https://i.postimg.cc/CxyDdnBb/file-000000004720820e96fffc337c6809b4.png" },
-  { name: "Mariana", amount: 7000, image: "https://i.postimg.cc/pTd53D4t/Promo-Neon-Roblox-7000-Robux.png" },
-  { name: "Pedro", amount: 10000, image: "https://i.postimg.cc/1tzVbp21/file-0000000070f0820e9e69a95a97920c59.png" },
-  { name: "Beatriz", amount: 4500, image: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
-  { name: "Rafael", amount: 1200, image: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
-  { name: "Camila", amount: 2100, image: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
+const recentPurchases = [
+  "yDarkx_gg",
+  "aninha_linda236",
+  "gabriel_txx5",
+  "EuMexmoo36",
+  "giovana_3883",
+  "fernandoblox64",
+  "nobruu_Apelao983",
 ];
 function DemoPurchasePopup() {
   const [current, setCurrent] = useState(-1);
@@ -176,7 +173,7 @@ function DemoPurchasePopup() {
     let position = 0;
     let hideTimer: ReturnType<typeof setTimeout> | undefined;
     const show = () => {
-      setCurrent(position % demoPurchases.length);
+      setCurrent(position % recentPurchases.length);
       position += 1;
       setVisible(true);
       hideTimer = setTimeout(() => setVisible(false), 5000);
@@ -188,15 +185,15 @@ function DemoPurchasePopup() {
     }, 5000);
     return () => { clearTimeout(first); if (interval) clearInterval(interval); if (hideTimer) clearTimeout(hideTimer); };
   }, []);
-  const item = demoPurchases[current];
-  if (!item) return null;
+  const username = recentPurchases[current];
+  if (!username) return null;
   return (
-    <aside aria-label="Demonstração de notificação" className={`pointer-events-none fixed bottom-5 left-3 z-40 w-[min(340px,calc(100vw-24px))] transition-all duration-1000 ease-in-out ${visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
+    <aside aria-label="Notificação de compra" className={`pointer-events-none fixed bottom-5 left-3 z-40 w-[min(340px,calc(100vw-24px))] transition-all duration-1000 ease-in-out ${visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
       <div className="flex items-center gap-3 rounded-2xl border border-slate-500/50 bg-[#111214]/95 p-3 text-white shadow-2xl backdrop-blur">
-        <img src={item.image} alt="" className="h-20 w-14 shrink-0 rounded-lg object-cover" />
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-500/20 text-2xl" aria-hidden="true">🎁</div>
         <div className="min-w-0">
-          <p className="mt-1 text-base font-bold">{item.name} comprou {item.amount.toLocaleString("pt-BR")} Robux</p>
-          <p className="mt-1 text-xs text-slate-400">Demonstração</p>
+          <p className="text-base font-bold">{username}</p>
+          <p className="mt-1 text-xs text-slate-400">fez uma compra na Dynastia Bux</p>
         </div>
       </div>
     </aside>
