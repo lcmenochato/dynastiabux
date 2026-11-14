@@ -445,27 +445,31 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         const response = await fetch(api + "/api/status-pix?paymentId=" + encodeURIComponent(payment!.id), {cache:"no-store"});
         if (!response.ok) return;
         const data = await response.json();
-        const status = String(data.status || data.paymentStatus || data.payment_status || data.state || "").toUpperCase();
+        const status = String(
+          data.status || data.paymentStatus || data.payment_status || data.state ||
+          data.data?.status || data.data?.payment_status ||
+          data.transaction?.status || data.transaction?.payment_status || ""
+        ).trim().toUpperCase();
         if (
   active &&
   !redirected &&
   (data.paid === true ||
-    ["APPROVED", "PAID", "COMPLETED", "CONFIRMED", "SUCCESS", "SUCCEEDED"].includes(status))
+    ["APPROVED", "PAID", "COMPLETED", "CONFIRMED", "SUCCESS", "SUCCEEDED", "PAYMENT_APPROVED", "PAYMENT_CONFIRMED"].includes(status))
 ) {
   redirected = true;
   setPaid(true);
   try {
     const purchaseEventKey = "tiktok_purchase_sent_" + payment!.id;
-    if (!window.sessionStorage.getItem(purchaseEventKey)) {
-      const ttq = (window as typeof window & { ttq?: { track?: (event: string, data: Record<string, unknown>) => void } }).ttq;
+    if (!window.localStorage.getItem(purchaseEventKey)) {
+      const ttq = (window as typeof window & { ttq?: { track?: (event: string, data: Record<string, unknown>, options?: { event_id?: string }) => void } }).ttq;
       if (ttq?.track) {
         ttq.track("Purchase", {
           value: Number(payment!.amount.toFixed(2)),
           currency: "BRL",
           content_type: "product",
           content_id: "dynastia-robux"
-        });
-        window.sessionStorage.setItem(purchaseEventKey, "1");
+        }, { event_id: payment!.id });
+        window.localStorage.setItem(purchaseEventKey, "1");
       }
     }
   } catch (pixelError) {
