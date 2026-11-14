@@ -247,30 +247,3 @@ button.bg-gold, .bg-gold { background: var(--gradient-gold); }
   .snowfall::before,
   .snowfall::after { animation: none; }
 }
-
-/* Enfeites natalinos discretos somente nas laterais dos cards de produto. */
-.dynastia-christmas-card::before {
-  content: "";
-  position: absolute;
-  inset: 8px;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    radial-gradient(circle, #ffe7a0 0 2px, rgba(255, 205, 91, .45) 2.5px, transparent 4px) left center / 8px 42px repeat-y,
-    radial-gradient(circle, #ffe7a0 0 2px, rgba(255, 205, 91, .45) 2.5px, transparent 4px) right center / 8px 42px repeat-y;
-  opacity: .82;
-}
-.dynastia-christmas-card::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  z-index: 3;
-  pointer-events: none;
-  border-radius: 20px;
-  background:
-    radial-gradient(ellipse at 3px 3px, #246b3e 0 3px, transparent 4px),
-    radial-gradient(ellipse at calc(100% - 3px) 3px, #246b3e 0 3px, transparent 4px),
-    radial-gradient(ellipse at 3px calc(100% - 3px), #246b3e 0 3px, transparent 4px),
-    radial-gradient(ellipse at calc(100% - 3px) calc(100% - 3px), #246b3e 0 3px, transparent 4px);
-  opacity: .7;
-}
