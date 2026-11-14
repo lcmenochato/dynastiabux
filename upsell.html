@@ -16,11 +16,11 @@
         html, body {
             width: 100%;
             min-height: 100%;
-            background: #0C1016;
+            background: #0B0714;
         }
 
         body {
-            background-color: #0C1016;
+            background-color: #0B0714;
             color: #FFFFFF;
             display: flex;
             justify-content: center;
@@ -32,7 +32,7 @@
         .container {
             width: 100%;
             max-width: 480px;
-            background-color: #0C1016;
+            background-color: #0B0714;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,14 +41,14 @@
         /* Top Bar Cronômetro */
         .timer-bar {
             width: 100%;
-            background: linear-gradient(180deg, #29313B 0%, #121820 100%);
-            border-bottom: 1px solid #515D6B;
+            background: linear-gradient(180deg, #3B1766 0%, #160B2B 100%);
+            border-bottom: 1px solid #6D28D9;
             text-align: center;
             padding: 16px 20px;
         }
 
         .timer-title {
-            color: #E8EDF3;
+            color: #F3E8FF;
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 1.5px;
@@ -57,11 +57,11 @@
         }
 
         .timer-clock {
-            color: #C9D2DD;
+            color: #D8B4FE;
             font-size: 38px;
             font-weight: 900;
             letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(201,210,221,.35);
+            text-shadow: 0 0 15px rgba(192,132,252,.4);
         }
 
         /* Conteúdo Principal */
@@ -86,7 +86,7 @@
 
         .description {
             font-size: 15px;
-            color: #D1D5DB;
+            color: #E9D5FF;
             text-align: center;
             line-height: 1.5;
             margin-bottom: 24px;
@@ -98,18 +98,18 @@
         }
 
         .description .price-tag {
-            color: #C9D2DD;
+            color: #D8B4FE;
             font-weight: 800;
         }
 
         /* Card do Produto */
         .upsell-card {
             width: 100%;
-            background-color: #19212B;
-            border: 1.5px solid #B9C4D0;
+            background-color: #211033;
+            border: 1.5px solid #A855F7;
             border-radius: 16px;
             padding: 24px 20px;
-            box-shadow: 0 0 25px rgba(185,196,208,.15);
+            box-shadow: 0 0 25px rgba(168,85,247,.2);
             margin-bottom: 24px;
         }
 
@@ -123,13 +123,13 @@
         .shield-icon {
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, #B9C4D0 0%, #657384 100%);
+            background: linear-gradient(135deg, #A855F7 0%, #6B21A8 100%);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(185,196,208,.3);
+            box-shadow: 0 4px 12px rgba(168,85,247,.35);
         }
 
         .shield-icon svg {
@@ -176,7 +176,7 @@
             align-items: center;
             gap: 12px;
             font-size: 14px;
-            color: #E5E7EB;
+            color: #F3E8FF;
             font-weight: 500;
         }
 
@@ -202,7 +202,7 @@
         .price-section {
             text-align: center;
             padding-top: 16px;
-            border-top: 1px solid #515D6B;
+            border-top: 1px solid #6D28D9;
         }
 
         .main-price {
@@ -222,7 +222,7 @@
         /* Botão CTA */
         .cta-button {
             width: 100%;
-            background: linear-gradient(135deg, #B9C4D0 0%, #B9C4D0 50%, #8795A5 100%);
+            background: linear-gradient(135deg, #A855F7 0%, #A855F7 50%, #7E22CE 100%);
             color: #FFFFFF;
             border: none;
             border-radius: 12px;
@@ -232,7 +232,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(185,196,208,.35);
+            box-shadow: 0 8px 25px rgba(168,85,247,.35);
             transition: all 0.2s ease;
             text-decoration: none;
             display: block;
@@ -242,15 +242,27 @@
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(185,196,208,.55);
-            background: linear-gradient(135deg, #C9D2DD 0%, #E8EDF3 50%, #B9C4D0 100%);
+            box-shadow: 0 12px 30px rgba(192,132,252,.55);
+            background: linear-gradient(135deg, #D8B4FE 0%, #F3E8FF 50%, #A855F7 100%);
+        }
+
+        .skip-button {
+            display: block;
+            width: 100%;
+            margin: -10px 0 24px;
+            padding: 10px 12px;
+            color: #D8B4FE;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: underline;
         }
 
         /* Caixas de Aviso */
         .warning-box {
             width: 100%;
-            background-color: #252E39;
-            border: 1px solid #768596;
+            background-color: #2B1742;
+            border: 1px solid #7E22CE;
             border-radius: 12px;
             padding: 16px;
             display: flex;
@@ -284,7 +296,7 @@
         }
 
         .warning-title {
-            color: #E8EDF3;
+            color: #F3E8FF;
             font-size: 14px;
             font-weight: 800;
             letter-spacing: 0.5px;
@@ -292,7 +304,7 @@
 
         .warning-desc {
             font-size: 13px;
-            color: #D5DEE8;
+            color: #DDD6FE;
             line-height: 1.4;
         }
 
@@ -319,16 +331,16 @@
     <div class="container">
         <!-- Top Bar com Contador -->
         <div class="timer-bar">
-            <div class="timer-title">Tempo para liberar seus Robux</div>
-            <div class="timer-clock" id="timer">09:52</div>
+            <div class="timer-title">Oferta especial opcional</div>
+            <div class="timer-clock" id="timer">R$ 14,90</div>
         </div>
 
         <div class="content">
             <!-- Título Principal -->
-            <h1 class="main-title">Taxa OBRIGATÓRIA para liberação dos Robux</h1>
+            <h1 class="main-title">Oferta adicional de Robux</h1>
             
             <p class="description">
-               ara liberar os Robux adquiridos na sua conta, é OBRIGATÓRIO pagar uma taxa antifraude única de <span class="price-tag">R$ 14,90</span>. Este valor é totalmente reembolsável e será devolvido após a liberação.
+                Se desejar, você pode adicionar esta oferta por <span class="price-tag">R$ 14,90</span>. Ela é uma compra separada e <strong>não é necessária</strong> para receber o pedido principal.
             </p>
 
             <!-- Card de Checkout / Upsell -->
@@ -340,8 +352,8 @@
                         </svg>
                     </div>
                     <div class="card-header-text">
-                        <div class="card-title">Taxa de liberação dos Robux</div>
-                        <div class="badge">100% reembolsável</div>
+                        <div class="card-title">Oferta adicional de Robux</div>
+                        <div class="badge">Opcional</div>
                     </div>
                 </div>
 
@@ -352,7 +364,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Proteção contra fraude e chargeback
+                        Compra adicional independente
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -360,7 +372,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Entrega garantida dos Robux
+                        Pagamento separado via PIX
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -368,7 +380,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Valor devolvido após liberação
+                        Não altera seu pedido principal
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -376,18 +388,19 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Pagamento 100% seguro via PIX
+                        Você decide se deseja adicionar
                     </div>
                 </div>
 
                 <div class="price-section">
                     <div class="main-price">R$ 14,90</div>
-                    <div class="price-subtext">Valor reembolsável apos a liberação</div>
+                    <div class="price-subtext">Compra adicional opcional</div>
                 </div>
             </div>
 
             <!-- Botão de Ação -->
-            <a href="#" class="cta-button">PAGAR AGORA — R$ 14,90</a>
+            <a href="#" class="cta-button">QUERO ADICIONAR — R$ 14,90</a>
+            <a href="/" class="skip-button">Não, obrigado — continuar para a loja</a>
 
             <!-- Aviso de Atenção -->
             <div class="warning-box">
@@ -397,9 +410,9 @@
                     </svg>
                 </div>
                 <div class="warning-text-container">
-                    <div class="warning-title">ATENÇÃO</div>
+                    <div class="warning-title">IMPORTANTE</div>
                     <div class="warning-desc">
-                      Se você NÃO pagar esta taxa antifraude, seus Robux NÃO serão liberados! O pagamento é OBRIGATÓRIO para processar a liberação na sua conta.
+                      Esta oferta é opcional. Se você não quiser adicioná-la, seu pedido principal continua confirmado normalmente.
                     </div>
                 </div>
             </div>
@@ -409,40 +422,16 @@
                 <svg viewBox="0 0 24 24">
                     <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
                 </svg>
-                <span>Pagamento via PIX — Kingdom Robux</span>
+                <span>Pagamento via PIX — Dynastia Bux</span>
             </div>
         </div>
     </div>
 
-    <!-- Script para o Cronômetro Funcional -->
-    <script>
-        function startTimer(duration, display) {
-            let timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    timer = duration;
-                }
-            }, 1000);
-        }
-
-        window.onload = function () {
-            let nineMinutesFiftyTwo = 9 * 60 + 52;
-            let display = document.querySelector('#timer');
-            startTimer(nineMinutesFiftyTwo, display);
-        };
-    </script>
+    <!-- O valor da oferta fica visível no topo; sem cronômetro de falsa urgência. -->
 
 <script>
 (() => {
-  const ENDPOINT = "https://flevopay-api.lcfferr57.workers.dev/api/create-pix";
+  const ENDPOINT = "/api/create-pix";
   const PRICE = 14.90;
 
   function getParentPurchase() {
@@ -486,7 +475,7 @@
       if (busy) return;
       busy = true;
       try {
-        const response = await fetch("https://flevopay-api.lcfferr57.workers.dev/api/status-pix?paymentId=" + encodeURIComponent(String(id)), { cache: "no-store" });
+        const response = await fetch("/api/status-pix?paymentId=" + encodeURIComponent(String(id)), { cache: "no-store" });
         if (!response.ok) return;
         const result = await response.json();
         const status = String(result.status || result.paymentStatus || result.payment_status || result.state || "").toUpperCase();
@@ -553,14 +542,11 @@
     let purchase = getParentPurchase();
     let email = normalizeEmail(purchase.email);
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      email = normalizeEmail(window.prompt("Informe o e-mail utilizado na compra original para gerar o PIX adicional:") || "");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Informe um e-mail válido para continuar.");
-        return;
-      }
+    const username = String(purchase.username || "").trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !username) {
+      alert("Não encontramos os dados da compra principal. Volte ao checkout e confira seu e-mail e usuário Roblox.");
+      return;
     }
-    purchase.email = email;
 
     button.dataset.loading = "1";
     const originalText = button.textContent;
@@ -573,13 +559,8 @@
         body: JSON.stringify({
           amount: PRICE,
           product: "Oferta adicional opcional de Robux",
-          description: "Oferta adicional opcional de Robux",
-          source: "kingdom-robux-upsell",
-          externalReference: "UPSELL-" + (purchase.paymentId || purchase.orderId || "TESTE") + "-" + Date.now() + "-" + Math.random().toString(16).slice(2),
-          originalOrderId: purchase.paymentId || purchase.orderId || "",
-          name: purchase.name || "Cliente",
-          email: purchase.email || "",
-          username: purchase.username || ""
+          email,
+          username
         })
       });
 
