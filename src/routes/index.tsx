@@ -455,6 +455,23 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
   redirected = true;
   setPaid(true);
   try {
+    const purchaseEventKey = "tiktok_purchase_sent_" + payment!.id;
+    if (!window.sessionStorage.getItem(purchaseEventKey)) {
+      const ttq = (window as typeof window & { ttq?: { track?: (event: string, data: Record<string, unknown>) => void } }).ttq;
+      if (ttq?.track) {
+        ttq.track("Purchase", {
+          value: Number(payment!.amount.toFixed(2)),
+          currency: "BRL",
+          content_type: "product",
+          content_id: "dynastia-robux"
+        });
+        window.sessionStorage.setItem(purchaseEventKey, "1");
+      }
+    }
+  } catch (pixelError) {
+    console.error("Não foi possível enviar o Purchase ao TikTok Pixel:", pixelError);
+  }
+  try {
     const originalPurchase = JSON.stringify({
       paymentId: payment!.id,
       email: email.trim(),
