@@ -46,7 +46,7 @@ const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", curren
 function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void }) {
   const soldOut = "soldOut" in p && p.soldOut;
   return (
-    <div className="relative w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border-2 border-purple-400/70 bg-gradient-to-br from-[#4c1d95] via-[#2e1065] to-[#160b2e] shadow-[0_0_28px_rgba(168,85,247,0.38)]">
+    <div className="dynastia-christmas-card relative w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border-2 border-purple-400/70 bg-gradient-to-br from-[#4c1d95] via-[#2e1065] to-[#160b2e] shadow-[0_0_28px_rgba(168,85,247,0.38)]">
       {p.bonus && <span className="pointer-events-none absolute right-2 top-2 z-[1] rounded-full border border-white/20 bg-[#32105c]/85 px-2.5 py-1 text-[10px] font-extrabold tracking-wide text-purple-100 shadow-lg backdrop-blur-sm">🎄 NATAL</span>}
       <img src={p.img} alt={`${p.amount} Robux`} width={1024} height={1536} loading="lazy" className="aspect-[2/3] w-full object-cover" />
       <div className="space-y-1.5 p-3">
