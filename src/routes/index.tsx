@@ -180,7 +180,7 @@ function DemoPurchasePopup() {
     let interval: ReturnType<typeof setInterval> | undefined;
     const first = setTimeout(() => {
       show();
-      interval = setInterval(show, 6000);
+      interval = setInterval(show, 10000);
     }, 5000);
     return () => { clearTimeout(first); if (interval) clearInterval(interval); if (hideTimer) clearTimeout(hideTimer); };
   }, []);
