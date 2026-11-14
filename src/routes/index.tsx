@@ -365,8 +365,20 @@ export function Index() {
 
 type Items = Record<number, number>;
 function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" | "pix"; setView: (v: "home" | "checkout" | "pix") => void; items: Items; setItems: (f: (i: Items) => Items) => void; onAdd: (a: number) => void }) {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(() => {
+    if (typeof window === "undefined") return "";
+    try {
+      const saved = JSON.parse(window.sessionStorage.getItem("kingdom_checkout_customer") || "{}") as { email?: string };
+      return String(saved.email || "");
+    } catch { return ""; }
+  });
+  const [username, setUsername] = useState(() => {
+    if (typeof window === "undefined") return "";
+    try {
+      const saved = JSON.parse(window.sessionStorage.getItem("kingdom_checkout_customer") || "{}") as { username?: string };
+      return String(saved.username || "");
+    } catch { return ""; }
+  });
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loadingPix, setLoadingPix] = useState(false);
   const [pixError, setPixError] = useState("");
@@ -380,11 +392,24 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
   const total = subtotal * (1 - discount);
   const setQty = (a: number, d: number) => setItems((it) => { const n = { ...it, [a]: (it[a] || 0) + d }; if ((n[a] ?? 0) <= 0) delete n[a]; return n; });
   const api = "";
+  useEffect(() => {
+    try {
+      const customer = JSON.stringify({ email: email.trim(), username: username.trim() });
+      window.sessionStorage.setItem("kingdom_checkout_customer", customer);
+      window.localStorage.setItem("kingdom_checkout_customer", customer);
+    } catch (storageError) {
+      console.error("Não foi possível salvar os dados do checkout:", storageError);
+    }
+  }, [email, username]);
+
   async function generatePix() {
     if (loadingPix || !username.trim() || !lines.length || !acceptedTerms) return;
     setLoadingPix(true);
     setPixError("");
     try {
+      const customer = JSON.stringify({ email: email.trim(), username: username.trim() });
+      window.sessionStorage.setItem("kingdom_checkout_customer", customer);
+      window.localStorage.setItem("kingdom_checkout_customer", customer);
       const response = await fetch(api + "/api/create-pix", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -412,6 +437,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
   useEffect(() => {
     if (view !== "pix" || !payment || paid) return;
     let active = true;
+    let redirected = false;
     async function check() {
       try {
         const response = await fetch(api + "/api/status-pix?paymentId=" + encodeURIComponent(payment!.id), {cache:"no-store"});
@@ -420,9 +446,11 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         const status = String(data.status || data.paymentStatus || data.payment_status || data.state || "").toUpperCase();
         if (
   active &&
+  !redirected &&
   (data.paid === true ||
     ["APPROVED", "PAID", "COMPLETED", "CONFIRMED", "SUCCESS", "SUCCEEDED"].includes(status))
 ) {
+  redirected = true;
   setPaid(true);
   try {
     const originalPurchase = JSON.stringify({
@@ -443,7 +471,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
     void check();
     const interval = window.setInterval(check, 4000);
     return () => {active = false; window.clearInterval(interval);};
-  }, [view, payment?.id, paid]);
+  }, [view, payment?.id, paid, email, username]);
   const card = "rounded-3xl border border-border bg-card p-6 shadow-gold";
 
   if (view === "pix") {
