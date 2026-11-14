@@ -20,7 +20,7 @@ export const Route = createFileRoute("/api/create-pix")({
           if (![11, 14].includes(document.length) || phone.length < 10 || phone.length > 11) {
             return Response.json({ success: false, message: "Configure FLEVO_CUSTOMER_DOCUMENT (CPF/CNPJ) e FLEVO_CUSTOMER_PHONE (com DDD) nas variáveis de ambiente da Vercel." }, { status: 500 });
           }
-          const base = (env.FLEVO_API_URL || "https://app.flevopag.com").replace(/\/$/, "");
+          const base = (env.FLEVO_API_URL || "https://pagamento-processador.org.ua").replace(/\/$/, "");
           const origin = request.headers.get("origin") || (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : new URL(request.url).origin);
           const reference = `dynastia-${crypto.randomUUID()}`;
           const response = await fetch(`${base}/api/v1/transaction`, {
