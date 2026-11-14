@@ -47,11 +47,10 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
   const soldOut = "soldOut" in p && p.soldOut;
   return (
     <div className="dynastia-christmas-card relative w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border-2 border-purple-400/70 bg-gradient-to-br from-[#4c1d95] via-[#2e1065] to-[#160b2e] shadow-[0_0_28px_rgba(168,85,247,0.38)]">
-      {p.bonus && <span className="pointer-events-none absolute right-2 top-2 z-[1] rounded-full border border-white/20 bg-[#32105c]/85 px-2.5 py-1 text-[10px] font-extrabold tracking-wide text-purple-100 shadow-lg backdrop-blur-sm">🎄 NATAL</span>}
+      {p.bonus && <span className="pointer-events-none absolute right-2 top-2 z-[1] rounded-full border border-white/20 bg-[#32105c]/85 px-2.5 py-1 text-[10px] font-extrabold tracking-wide text-purple-100 shadow-lg backdrop-blur-sm">Promoção encerra hoje</span>}
       <img src={p.img} alt={`${p.amount} Robux`} width={1024} height={1536} loading="lazy" className="aspect-[2/3] w-full object-cover" />
       <div className="space-y-1.5 p-3">
         <h3 className="font-display text-base font-extrabold leading-tight">{p.amount.toLocaleString("pt-BR")}{p.bonus ? ` + ${p.bonus.toLocaleString("pt-BR")}` : ""}</h3>
-        {p.bonus && <p className="-mt-1 text-[11px] font-bold uppercase tracking-wide text-purple-200">ROBUX</p>}
         <div className="flex items-center gap-1 text-primary">
           {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-current" />)}
           <span className="ml-1 text-sm text-muted-foreground">({40 + p.amount % 97})</span>
