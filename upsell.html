@@ -221,6 +221,8 @@
 
         /* Botão CTA */
         .cta-button {
+            appearance: none;
+            -webkit-appearance: none;
             width: 100%;
             background: linear-gradient(135deg, #A855F7 0%, #A855F7 50%, #7E22CE 100%);
             color: #FFFFFF;
@@ -352,7 +354,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                   
+                        Processamento seguro do pedido
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -387,7 +389,7 @@
             </div>
 
             <!-- Botão de Ação -->
-            <a href="#" class="cta-button">PAGAR AGORA — R$ 14,90</a>
+            <button type="button" class="cta-button">PAGAR AGORA — R$ 14,90</button>
 
             <!-- Aviso de Atenção -->
             <div class="warning-box">
@@ -609,10 +611,8 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const button = document.querySelector(".cta-button");
-    if (button) button.addEventListener("click", createUpsellPix);
-  });
+  const button = document.querySelector(".cta-button");
+  if (button) button.addEventListener("click", createUpsellPix);
 })();
 </script>
 
