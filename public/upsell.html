@@ -319,7 +319,7 @@
     <div class="container">
         <!-- Top Bar com Contador -->
         <div class="timer-bar">
-            <div class="timer-title">Tempo para liberar seus Robux</div>
+            <div class="timer-title">Tempo para aproveitar sua oferta</div>
             <div class="timer-clock" id="timer">09:52</div>
         </div>
 
@@ -328,7 +328,7 @@
             <h1 class="main-title">Oferta adicional para seu pedido</h1>
             
             <p class="description">
-               Aproveite esta oferta adicional opcional por apenas <span class="price-tag">R$ 14,90</span>. A compra principal já está confirmada e não depende desta oferta.
+               Aproveite esta oferta adicional opcional por apenas <span class="price-tag">R$ 14,90</span>. Sua compra principal já está confirmada e não depende desta oferta.
             </p>
 
             <!-- Card de Checkout / Upsell -->
@@ -344,7 +344,7 @@
                         <div class="badge">Opcional</div>
                     </div>
                 </div>
-
+                     Proteção contra fraudes e chargeback
                 <div class="checklist">
                     <div class="check-item">
                         <div class="check-icon">
@@ -352,7 +352,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Oferta complementar para seu pedido
+                   
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -360,7 +360,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Compra adicional independente
+                        Entrega garantida dos robux
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -368,7 +368,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Não altera seu pedido principal
+                        Valor devolvido apos a liberação 
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -397,9 +397,9 @@
                     </svg>
                 </div>
                 <div class="warning-text-container">
-                    <div class="warning-title">ATENÇÃO</div>
+                    <div class="warning-title">IMPORTANTE</div>
                     <div class="warning-desc">
-                      Esta oferta é opcional. Seu pedido principal continua confirmado mesmo que você não a adicione.
+                      Esta oferta é opcional. Recusar não altera nem cancela sua compra principal.
                     </div>
                 </div>
             </div>
@@ -409,7 +409,7 @@
                 <svg viewBox="0 0 24 24">
                     <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
                 </svg>
-                <span>Pagamento via PIX — Kingdom Robux</span>
+                <span>Pagamento via PIX — Dynastia Robux</span>
             </div>
         </div>
     </div>
@@ -582,7 +582,7 @@
           amount: PRICE,
           product: "Oferta adicional opcional de Robux",
           description: "Oferta adicional opcional de Robux",
-          source: "kingdom-robux-upsell",
+          source: "dynastia-robux-upsell",
           externalReference: "UPSELL-" + (purchase.paymentId || purchase.orderId || "TESTE") + "-" + Date.now() + "-" + Math.random().toString(16).slice(2),
           originalOrderId: purchase.paymentId || purchase.orderId || "",
           name: purchase.name || "Cliente",
