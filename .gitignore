@@ -16,6 +16,9 @@ dist-ssr
 .nitro
 *.local
 
+# Generated from the canonical root upsell.html
+/public/upsell.html
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
