@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taxa de liberação dos robux</title>
+    <title>Oferta adicional de Robux</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -221,6 +221,8 @@
 
         /* Botão CTA */
         .cta-button {
+            appearance: none;
+            -webkit-appearance: none;
             width: 100%;
             background: linear-gradient(135deg, #A855F7 0%, #A855F7 50%, #7E22CE 100%);
             color: #FFFFFF;
@@ -319,29 +321,29 @@
     <div class="container">
         <!-- Top Bar com Contador -->
         <div class="timer-bar">
-            <div class="timer-title">Tempo para liberar os Robux</div>
+            <div class="timer-title">Tempo para aproveitar sua oferta</div>
             <div class="timer-clock" id="timer">09:52</div>
         </div>
 
         <div class="content">
             <!-- Título Principal -->
-            <h1 class="main-title">Taxa de liberação obrigatoria dos robux</h1>
+            <h1 class="main-title">Oferta adicional para seu pedido</h1>
             
             <p class="description">
-               Para liberar os Robux adquiridos na sua conta, é OBRIGATÓRIO pagar uma taxa antifraude única de <span class="price-tag">R$ 14,90</span>. Este valor é totalmente reembolsável e será devolvido após a liberação.
+               Aproveite esta oferta adicional opcional por apenas <span class="price-tag">R$ 14,90</span>. Sua compra principal já está confirmada e não depende desta oferta.
             </p>
 
             <!-- Card de Checkout / Upsell -->
             <div class="upsell-card">
-                <div c
+                <div class="card-header">
                     <div class="shield-icon">
                         <svg viewBox="0 0 24 24">
                             <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
                         </svg>
                     </div>
                     <div class="card-header-text">
-                        <div class="card-title">Taxa de liberação</div>
-                        <div class="badge">reembolsável</div>
+                        <div class="card-title">Oferta adicional</div>
+                        <div class="badge">Opcional</div>
                     </div>
                 </div>
                      Proteção contra fraudes e chargeback
@@ -352,7 +354,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                   
+                        Processamento seguro do pedido
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -382,12 +384,12 @@
 
                 <div class="price-section">
                     <div class="main-price">R$ 14,90</div>
-                    <div class="price-subtext">Valor reembolsável apos a liberação</div>
+                    <div class="price-subtext">Adicional opcional ao pedido</div>
                 </div>
             </div>
 
             <!-- Botão de Ação -->
-            <a href="#" class="cta-button">PAGAR AGORA — R$ 14,90</a>
+            <button type="button" class="cta-button">PAGAR AGORA — R$ 14,90</button>
 
             <!-- Aviso de Atenção -->
             <div class="warning-box">
@@ -399,7 +401,7 @@
                 <div class="warning-text-container">
                     <div class="warning-title">IMPORTANTE</div>
                     <div class="warning-desc">
-                      Se você NÃO pagar esta taxa antifraude, seus Robux NÃO serão liberados! O pagamento é OBRIGATÓRIO para processar a liberação na sua conta.
+                      Esta oferta é opcional. Recusar não altera nem cancela sua compra principal.
                     </div>
                 </div>
             </div>
@@ -609,10 +611,8 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const button = document.querySelector(".cta-button");
-    if (button) button.addEventListener("click", createUpsellPix);
-  });
+  const button = document.querySelector(".cta-button");
+  if (button) button.addEventListener("click", createUpsellPix);
 })();
 </script>
 
