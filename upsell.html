@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taxa de liberação dos robux</title>
+    <title>Oferta adicional de Robux</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -319,16 +319,16 @@
     <div class="container">
         <!-- Top Bar com Contador -->
         <div class="timer-bar">
-            <div class="timer-title">Tempo para liberar seus Robux</div>
+            <div class="timer-title">Tempo para aproveitar sua oferta</div>
             <div class="timer-clock" id="timer">09:52</div>
         </div>
 
         <div class="content">
             <!-- Título Principal -->
-            <h1 class="main-title">Taxa obrigatória para liberação dos robux</h1>
+            <h1 class="main-title">Oferta adicional para seu pedido</h1>
             
             <p class="description">
-               Para liberar os Robux adquiridos na sua conta, é OBRIGATÓRIO pagar uma taxa antifraude única de <span class="price-tag">R$ 14,90</span>. Este valor é totalmente reembolsável e será devolvido após a liberação.
+               Aproveite esta oferta adicional opcional por apenas <span class="price-tag">R$ 14,90</span>. Sua compra principal já está confirmada e não depende desta oferta.
             </p>
 
             <!-- Card de Checkout / Upsell -->
@@ -340,8 +340,8 @@
                         </svg>
                     </div>
                     <div class="card-header-text">
-                        <div class="card-title">Taxa obrigatória</div>
-                        <div class="badge">100% reembolsável</div>
+                        <div class="card-title">Oferta adicional</div>
+                        <div class="badge">Opcional</div>
                     </div>
                 </div>
                      Proteção contra fraudes e chargeback
@@ -382,7 +382,7 @@
 
                 <div class="price-section">
                     <div class="main-price">R$ 14,90</div>
-                    <div class="price-subtext">reembolsável apos a liberação</div>
+                    <div class="price-subtext">Adicional opcional ao pedido</div>
                 </div>
             </div>
 
@@ -397,9 +397,9 @@
                     </svg>
                 </div>
                 <div class="warning-text-container">
-                    <div class="warning-title">ATENÇÃO</div>
+                    <div class="warning-title">IMPORTANTE</div>
                     <div class="warning-desc">
-                      Se você NÃO pagar esta taxa antifraude, seus Robux NÃO serão liberados! O pagamento é OBRIGATÓRIO para processar a liberação na sua conta.
+                      Esta oferta é opcional. Recusar não altera nem cancela sua compra principal.
                     </div>
                 </div>
             </div>
@@ -580,8 +580,8 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: PRICE,
-          product: "Oferta obrigatória de robux ",
-          description: "Oferta obrigatória de Robux",
+          product: "Oferta adicional opcional de Robux",
+          description: "Oferta adicional opcional de Robux",
           source: "dynastia-robux-upsell",
           externalReference: "UPSELL-" + (purchase.paymentId || purchase.orderId || "TESTE") + "-" + Date.now() + "-" + Math.random().toString(16).slice(2),
           originalOrderId: purchase.paymentId || purchase.orderId || "",
