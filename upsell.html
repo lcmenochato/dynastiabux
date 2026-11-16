@@ -389,7 +389,7 @@
             </div>
 
             <!-- Botão de Ação -->
-            <button type="button" class="cta-button">PAGAR AGORA — R$ 14,90</button>
+            <button type="button" id="upsellPayButton" class="cta-button">PAGAR AGORA — R$ 14,90</button>
 
             <!-- Aviso de Atenção -->
             <div class="warning-box">
@@ -611,8 +611,16 @@
     }
   }
 
-  const button = document.querySelector(".cta-button");
-  if (button) button.addEventListener("click", createUpsellPix);
+  // Liga o clique diretamente ao botão, sem depender de uma busca genérica por classe.
+  // O HTML é servido como arquivo estático; manter a função no próprio documento
+  // garante que o botão continue funcionando quando o upsell for aberto diretamente.
+  const button = document.getElementById("upsellPayButton");
+  if (button) {
+    button.onclick = createUpsellPix;
+    button.setAttribute("aria-label", "Pagar oferta adicional de R$ 14,90 via PIX");
+  } else {
+    console.error("Dynastia Bux: botão do upsell não encontrado no HTML publicado.");
+  }
 })();
 </script>
 
