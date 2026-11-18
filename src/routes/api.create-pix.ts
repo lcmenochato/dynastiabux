@@ -28,7 +28,7 @@ export const Route = createFileRoute("/api/create-pix")({
             return Response.json({ success: false, message: "Configure FLEVO_CUSTOMER_PHONE na Vercel com o telefone autorizado pela FlevoPay, incluindo DDD e somente números." }, { status: 500 });
           }
 
-          const base = (env.FLEVO_API_URL || "https://pagamento-processador.org.ua").replace(/\/$/, "");
+          const base = (env.FLEVO_API_URL || "https://app.flevopay.com.br").replace(/\/$/, "");
           const origin = request.headers.get("origin") || (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : new URL(request.url).origin);
           const reference = `dynastia-${crypto.randomUUID()}`;
           const response = await fetch(`${base}/api/v1/transaction`, {
