@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-type Env = { FLEVO_API_KEY?: string; FLEVO_API_URL?: string; FLEVO_CUSTOMER_DOCUMENT?: string; FLEVO_CUSTOMER_PHONE?: string; VERCEL_URL?: string };
+type Env = { FLEVO_API_KEY?: string; FLEVO_CUSTOMER_DOCUMENT?: string; FLEVO_CUSTOMER_PHONE?: string; VERCEL_URL?: string };
 
 export const Route = createFileRoute("/api/create-pix")({
   server: {
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/api/create-pix")({
             return Response.json({ success: false, message: "Configure FLEVO_CUSTOMER_PHONE na Vercel com o telefone autorizado pela FlevoPay, incluindo DDD e somente números." }, { status: 500 });
           }
 
-          const base = "https://app.flevopay.com.br".replace(/\/$/, "");
+          const base = "https://app.flevopay.com.br";
           const origin = request.headers.get("origin") || (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : new URL(request.url).origin);
           const reference = `dynastia-${crypto.randomUUID()}`;
           const response = await fetch(`${base}/api/v1/transaction`, {
