@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 
 type Env = {
   FLEVO_API_KEY?: string;
-  FLEVO_API_URL?: string;
   TIKTOK_ACCESS_TOKEN?: string;
 };
 
@@ -50,7 +49,7 @@ export const Route = createFileRoute("/api/webhooks/flevo")({
           }
 
           // A documentação da FlevoPay usa este host e confirma a transação pelo ID interno.
-          const base = (env.FLEVO_API_URL || "https://app.flevopay.com.br").replace(/\/$/, "");
+          const base = "https://app.flevopay.com.br".replace(/\/$/, "");
           const verifyResponse = await fetch(
             `${base}/api/v1/query?action=get_transaction&id=${encodeURIComponent(transactionId)}`,
             { headers: { "X-API-Key": env.FLEVO_API_KEY, "Accept": "application/json" }, cache: "no-store" }
