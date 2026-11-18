@@ -5,6 +5,7 @@ type Env = { FLEVO_API_KEY?: string; FLEVO_API_URL?: string; FLEVO_CUSTOMER_DOCU
 export const Route = createFileRoute("/api/create-pix")({
   server: {
     handlers: {
+      GET: async () => Response.json({ success: true, route: "api/create-pix", methods: ["POST"] }),
       POST: async ({ request }) => {
         try {
           const env = (process.env ?? {}) as Env;
