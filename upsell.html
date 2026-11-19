@@ -496,7 +496,7 @@
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         const email = normalizeEmail(input.value);
-        if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
           input.setCustomValidity("Informe um e-mail válido.");
           input.reportValidity();
           return;
@@ -551,7 +551,7 @@
     const copyPaste = data.copyPaste || data.pixCode || data.pix_code || data.qrCode || data.qr_code || data.data?.copyPaste || data.data?.pixCode || data.data?.pix_code || "";
     const qrBase64 = data.qrCodeBase64 || data.qr_code_base64 || data.data?.qrCodeBase64 || data.data?.qr_code_base64 || "";
     const qrUrl = data.qrcodeUrl || data.qrCodeUrl || data.qr_code_url || data.qrcode_url || data.data?.qrcodeUrl || data.data?.qrCodeUrl || data.data?.qr_code_url || "";
-    const normalizedQrUrl = qrUrl && !/^https?:\\/\\//i.test(qrUrl) && !qrUrl.startsWith("data:") ? "data:image/png;base64," + qrUrl : qrUrl;
+    const normalizedQrUrl = qrUrl && !/^https?:\/\//i.test(qrUrl) && !qrUrl.startsWith("data:") ? "data:image/png;base64," + qrUrl : qrUrl;
     const qrSrc = qrBase64
       ? (qrBase64.startsWith("data:") ? qrBase64 : "data:image/png;base64," + qrBase64)
       : (normalizedQrUrl || (copyPaste ? "https://quickchart.io/qr?size=220&margin=2&text="+encodeURIComponent(copyPaste) : ""));
