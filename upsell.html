@@ -476,7 +476,7 @@
     return "R$ " + Number(v).toFixed(2).replace(".", ",");
   }
 
-  function askEmail() {
+  function askEmail(initialEmail = "") {
     return new Promise((resolve) => {
       const overlay = document.createElement("div");
       overlay.style.cssText = "position:fixed;inset:0;z-index:100000;background:rgba(8,5,15,.94);display:flex;align-items:center;justify-content:center;padding:20px";
@@ -491,6 +491,7 @@
       document.body.appendChild(overlay);
       const form = overlay.querySelector("#upsellEmailForm");
       const input = overlay.querySelector("#upsellEmailInput");
+      input.value = normalizeEmail(initialEmail);
       input.focus();
       form.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -594,10 +595,9 @@
     let email = normalizeEmail(purchase.email);
     let username = String(purchase.username || "").trim();
 
-    if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
-      email = await askEmail();
-      if (!email) return;
-    }
+    // Sempre solicitar confirmação do e-mail ao iniciar o pagamento do upsell.
+    email = await askEmail(email);
+    if (!email) return;
     purchase.email = email;
     if (!username) username = String(window.prompt("Informe seu usuário do Roblox para gerar o PIX adicional:") || "").trim();
     if (!username) {
