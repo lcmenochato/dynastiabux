@@ -476,6 +476,40 @@
     return "R$ " + Number(v).toFixed(2).replace(".", ",");
   }
 
+  function askEmail() {
+    return new Promise((resolve) => {
+      const overlay = document.createElement("div");
+      overlay.style.cssText = "position:fixed;inset:0;z-index:100000;background:rgba(8,5,15,.94);display:flex;align-items:center;justify-content:center;padding:20px";
+      overlay.innerHTML = `
+        <form id="upsellEmailForm" style="width:min(420px,100%);background:#160B2B;border:1px solid #A855F7;border-radius:18px;padding:24px;color:#fff;box-shadow:0 20px 60px rgba(168,85,247,.3)">
+          <h2 style="margin:0 0 8px;font-size:21px">Confirme seu e-mail</h2>
+          <p style="margin:0 0 18px;color:#D8B4FE;font-size:14px;line-height:1.5">Informe o mesmo e-mail utilizado na compra dos Robux para gerar o PIX adicional.</p>
+          <input id="upsellEmailInput" type="email" required autocomplete="email" placeholder="seuemail@exemplo.com" style="width:100%;padding:15px;border:1px solid #7E22CE;border-radius:10px;background:#0B0714;color:#fff;font-size:16px;outline:none">
+          <button type="submit" style="width:100%;margin-top:14px;padding:15px;border:0;border-radius:10px;background:linear-gradient(135deg,#A855F7,#7E22CE);color:#fff;font-size:15px;font-weight:800;cursor:pointer">CONTINUAR PARA O PIX</button>
+          <button type="button" id="cancelUpsellEmail" style="width:100%;margin-top:10px;padding:10px;border:0;background:transparent;color:#C4B5FD;cursor:pointer">Cancelar</button>
+        </form>`;
+      document.body.appendChild(overlay);
+      const form = overlay.querySelector("#upsellEmailForm");
+      const input = overlay.querySelector("#upsellEmailInput");
+      input.focus();
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const email = normalizeEmail(input.value);
+        if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+          input.setCustomValidity("Informe um e-mail válido.");
+          input.reportValidity();
+          return;
+        }
+        overlay.remove();
+        resolve(email);
+      });
+      overlay.querySelector("#cancelUpsellEmail").onclick = () => {
+        overlay.remove();
+        resolve("");
+      };
+    });
+  }
+
   let statusTimer = null;
   function watchUpsellPayment(data) {
     const id = data.paymentId || data.reference || data.transactionId || data.id || data.data?.paymentId || data.data?.reference;
@@ -560,12 +594,9 @@
     let email = normalizeEmail(purchase.email);
     let username = String(purchase.username || "").trim();
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      email = normalizeEmail(window.prompt("Informe o e-mail utilizado na compra original para gerar o PIX adicional:") || "");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Informe um e-mail válido para continuar.");
-        return;
-      }
+    if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+      email = await askEmail();
+      if (!email) return;
     }
     purchase.email = email;
     if (!username) username = String(window.prompt("Informe seu usuário do Roblox para gerar o PIX adicional:") || "").trim();
