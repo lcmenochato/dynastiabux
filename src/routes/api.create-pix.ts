@@ -36,7 +36,6 @@ export const Route = createFileRoute("/api/create-pix")({
             headers: { "Content-Type": "application/json", "Accept": "application/json", "X-API-Key": apiKey },
             body: JSON.stringify({
               amount: Math.round(amount * 100),
-              payment_method: "pix",
               description: input.product || "Robux - Dynastia Bux",
               reference,
               postback_url: `${origin}/api/webhooks/flevo`,
