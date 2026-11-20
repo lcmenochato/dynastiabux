@@ -95,7 +95,7 @@ export const Route = createFileRoute("/api/webhooks/flevo")({
           const email = String(tx.customer_data?.email || "").trim();
           const user = email ? { email: await sha256(email) } : {};
           // Mesmo Pixel ID usado no navegador; não permite fallback para IDs antigos via variável.
-          const pixelId = "DBUF50BC77U7CBT679F0";
+          const pixelId = "DC04M2RC77U6OQMI979G";
           const tiktokResponse = await fetch("https://business-api.tiktok.com/open_api/v1.3/event/track/", {
             method: "POST",
             headers: { "Content-Type": "application/json", "Access-Token": accessToken },
