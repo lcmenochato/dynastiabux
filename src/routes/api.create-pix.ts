@@ -12,9 +12,9 @@ export const Route = createFileRoute("/api/create-pix")({
           const apiKey = env.FLEVO_API_KEY;
           if (!apiKey) return Response.json({ success: false, message: "Configure FLEVO_API_KEY na Vercel com sua chave secreta da FlevoPay." }, { status: 500 });
 
-          const input = await request.json() as { email?: string; username?: string; amount?: number; product?: string };
+          const input = await request.json() as { email?: string; name?: string; username?: string; amount?: number; product?: string };
           const amount = Number(input.amount);
-          if (!Number.isFinite(amount) || amount < 1 || amount > 3000 || !input.email || !/\S+@\S+\.\S+/.test(input.email) || !input.username?.trim()) {
+          if (!Number.isFinite(amount) || amount < 1 || amount > 3000 || !input.email || !/\S+@\S+\.\S+/.test(input.email) || !(input.name || input.username)?.trim()) {
             return Response.json({ success: false, message: "Confira seu e-mail, usuário Roblox e valor do pedido." }, { status: 400 });
           }
 
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/api/create-pix")({
               reference,
               postback_url: `${origin}/api/webhooks/flevo`,
               source: "api_externa",
-              customer: { name: input.username.trim(), email: input.email.trim(), document, phone }
+              customer: { name: (input.name || input.username || "").trim(), email: input.email.trim(), document, phone }
             })
           });
 
