@@ -45,7 +45,7 @@ export const Route = createFileRoute("/api/create-pix")({
           });
 
           const responseText = await response.text();
-          let payload: { status?: string; message?: string; success?: boolean; transaction_id?: string | number; id?: string | number; qr_code?: string; qr_code_base64?: string; data?: { transaction_id?: string | number; id?: string | number; qr_code?: string; qr_code_base64?: string; pix_code?: string; copy_paste?: string } };
+          let payload: any;
           try {
             payload = JSON.parse(responseText);
           } catch {
@@ -53,12 +53,16 @@ export const Route = createFileRoute("/api/create-pix")({
             return Response.json({ success: false, message: `A API da FlevoPay respondeu em formato inválido (HTTP ${response.status}). Confira FLEVO_API_URL e os logs da Vercel.` }, { status: 502 });
           }
 
-          const paymentId = payload.transaction_id ?? payload.id ?? payload.data?.transaction_id ?? payload.data?.id;
-          const pixCode = payload.qr_code ?? payload.data?.qr_code ?? payload.data?.pix_code ?? payload.data?.copy_paste;
-          const pixQr = payload.qr_code_base64 ?? payload.data?.qr_code_base64;
-          if (!response.ok || payload.success === false || payload.status === "error" || !paymentId || (!pixCode && !pixQr)) {
-            console.error("FlevoPay create transaction:", response.status, payload);
-            return Response.json({ success: false, message: payload.message || `A FlevoPay recusou a cobrança (HTTP ${response.status}) ou retornou dados incompletos.` }, { status: 502 });
+          const data = payload?.data && typeof payload.data === "object" ? payload.data : payload;
+          const paymentId = data?.transaction_id ?? data?.transactionId ?? data?.paymentId ?? data?.id ?? payload?.transaction_id ?? payload?.id;
+          const pixCode = data?.qr_code ?? data?.pix_code ?? data?.copy_paste ?? data?.copyPaste ?? data?.pixCode ?? data?.brcode ?? payload?.qr_code ?? payload?.pix_code;
+          const pixQr = data?.qr_code_base64 ?? data?.qrCodeBase64 ?? data?.qrcode ?? data?.qrCode ?? payload?.qr_code_base64;
+          const apiMessage = payload?.message ?? payload?.error?.message ?? payload?.error ?? payload?.details?.[0]?.message;
+          const apiStatus = String(payload?.status ?? "").toLowerCase();
+          if (!response.ok || payload?.success === false || apiStatus === "error" || !paymentId || (!pixCode && !pixQr)) {
+            const reason = typeof apiMessage === "string" ? apiMessage : `Resposta incompleta da API (HTTP ${response.status}; id=${Boolean(paymentId)}; código=${Boolean(pixCode)}; QR=${Boolean(pixQr)}).`;
+            console.error("FlevoPay create transaction failed:", response.status, reason);
+            return Response.json({ success: false, message: `FlevoPay: ${reason}` }, { status: 502 });
           }
 
           return Response.json({ success: true, paymentId: String(paymentId), transactionId: String(paymentId), pixCode: pixCode || "", copyPaste: pixCode || "", qrcodeUrl: pixQr || "", status: payload.status || "pending" });
