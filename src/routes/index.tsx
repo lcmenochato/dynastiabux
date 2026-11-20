@@ -370,6 +370,13 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       return String(saved.email || "");
     } catch { return ""; }
   });
+  const [fullName, setFullName] = useState(() => {
+    if (typeof window === "undefined") return "";
+    try {
+      const saved = JSON.parse(window.sessionStorage.getItem("kingdom_checkout_customer") || "{}") as { fullName?: string };
+      return String(saved.fullName || "");
+    } catch { return ""; }
+  });
   const [username, setUsername] = useState(() => {
     if (typeof window === "undefined") return "";
     try {
@@ -392,16 +399,16 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
   const api = "";
   useEffect(() => {
     try {
-      const customer = JSON.stringify({ email: email.trim(), username: username.trim() });
+      const customer = JSON.stringify({ email: email.trim(), fullName: fullName.trim(), username: username.trim() });
       window.sessionStorage.setItem("kingdom_checkout_customer", customer);
       window.localStorage.setItem("kingdom_checkout_customer", customer);
     } catch (storageError) {
       console.error("Não foi possível salvar os dados do checkout:", storageError);
     }
-  }, [email, username]);
+  }, [email, fullName, username]);
 
   async function generatePix() {
-    if (loadingPix || !username.trim() || !lines.length || !acceptedTerms) return;
+    if (loadingPix || !fullName.trim() || !username.trim() || !lines.length || !acceptedTerms) return;
     setLoadingPix(true);
     setPixError("");
     try {
@@ -412,7 +419,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-          email: email.trim(), username: username.trim(),
+          email: email.trim(), name: fullName.trim(), username: username.trim(),
           amount: Number(total.toFixed(2)),
           product: lines.map(p => String(p.amount) + (p.bonus ? " + " + String(p.bonus) : "") + " ROBUX x" + String(items[p.amount])).join(", "),
           source: "kingdom-robux-new"
@@ -555,6 +562,8 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       </div>
       <div className={card}>
         <h2 className="flex items-center gap-3 font-display text-2xl font-extrabold"><User className="h-6 w-6" /> Seus Dados</h2>
+        <label className="mt-5 block text-muted-foreground">Como devemos te chamar? *</label>
+        <input autoComplete="name" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Seu nome completo" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
         <label className="mt-5 block text-muted-foreground">Email *</label>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@email.com" className="mt-2 w-full rounded-xl border border-border bg-muted px-4 py-3 outline-none focus:border-primary" />
         <label className="mt-5 block text-muted-foreground">Usuário Roblox *</label>
@@ -601,7 +610,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
             <span>Li e aceito os <a href="/#politicas-kingdom" target="_blank" rel="noopener noreferrer" className="text-foreground underline">termos</a> e a <a href="/#politicas-kingdom" target="_blank" rel="noopener noreferrer" className="text-foreground underline">política de privacidade</a>.</span>
           </label>
         </div>
-        <button disabled={!acceptedTerms || loadingPix || !lines.length || !username.trim() || !/\S+@\S+\.\S+/.test(email)} onClick={generatePix} className="mt-5 w-full rounded-full bg-gold py-4 font-display text-lg font-extrabold text-primary-foreground disabled:opacity-50">{loadingPix ? "GERANDO PIX..." : "FINALIZAR COMPRA"}</button>
+        <button disabled={!acceptedTerms || loadingPix || !lines.length || !fullName.trim() || !username.trim() || !/\S+@\S+\.\S+/.test(email)} onClick={generatePix} className="mt-5 w-full rounded-full bg-gold py-4 font-display text-lg font-extrabold text-primary-foreground disabled:opacity-50">{loadingPix ? "GERANDO PIX..." : "FINALIZAR COMPRA"}</button>
         {pixError && <p role="alert" className="mt-3 text-center text-destructive">{pixError}</p>}
         {lines.length > 0 && !/\S+@\S+\.\S+/.test(email) && <p className="mt-2 text-center text-sm text-muted-foreground">Preencha seu email para continuar</p>}
       </div>
