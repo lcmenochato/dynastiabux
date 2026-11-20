@@ -33,9 +33,10 @@ export const Route = createFileRoute("/api/create-pix")({
           const reference = `dynastia-${crypto.randomUUID()}`;
           const response = await fetch(`${base}/api/v1/transaction`, {
             method: "POST",
-            headers: { "Content-Type": "application/json", "X-API-Key": apiKey },
+            headers: { "Content-Type": "application/json", "Accept": "application/json", "X-API-Key": apiKey },
             body: JSON.stringify({
               amount: Math.round(amount * 100),
+              payment_method: "pix",
               description: input.product || "Robux - Dynastia Bux",
               reference,
               postback_url: `${origin}/api/webhooks/flevo`,
@@ -57,11 +58,26 @@ export const Route = createFileRoute("/api/create-pix")({
           const paymentId = data?.transaction_id ?? data?.transactionId ?? data?.paymentId ?? data?.id ?? payload?.transaction_id ?? payload?.id;
           const pixCode = data?.qr_code ?? data?.pix_code ?? data?.copy_paste ?? data?.copyPaste ?? data?.pixCode ?? data?.brcode ?? payload?.qr_code ?? payload?.pix_code;
           const pixQr = data?.qr_code_base64 ?? data?.qrCodeBase64 ?? data?.qrcode ?? data?.qrCode ?? payload?.qr_code_base64;
-          const apiMessage = payload?.message ?? payload?.error?.message ?? payload?.error ?? payload?.details?.[0]?.message;
           const apiStatus = String(payload?.status ?? "").toLowerCase();
+          const apiMessage = [
+            payload?.message,
+            payload?.error?.message,
+            typeof payload?.error === "string" ? payload.error : undefined,
+            payload?.details?.[0]?.message,
+            payload?.detail,
+            payload?.errors ? JSON.stringify(payload.errors) : undefined
+          ].filter((value) => typeof value === "string" && value.trim()).join(" | ");
           if (!response.ok || payload?.success === false || apiStatus === "error" || !paymentId || (!pixCode && !pixQr)) {
-            const reason = typeof apiMessage === "string" ? apiMessage : `Resposta incompleta da API (HTTP ${response.status}; id=${Boolean(paymentId)}; código=${Boolean(pixCode)}; QR=${Boolean(pixQr)}).`;
-            console.error("FlevoPay create transaction failed:", response.status, reason);
+            const reason = apiMessage || `Resposta incompleta da API (HTTP ${response.status}; id=${Boolean(paymentId)}; código=${Boolean(pixCode)}; QR=${Boolean(pixQr)}).`;
+            // Registra a resposta do gateway (sem chave de API nem dados enviados pelo cliente)
+            // para distinguir rejeição de payload de falha interna do adquirente/banco.
+            console.error("FlevoPay create transaction failed:", JSON.stringify({
+              httpStatus: response.status,
+              status: payload?.status ?? null,
+              message: reason,
+              errorCode: payload?.error_code ?? payload?.code ?? null,
+              details: payload?.details ?? payload?.errors ?? null
+            }));
             return Response.json({ success: false, message: `FlevoPay: ${reason}` }, { status: 502 });
           }
 
