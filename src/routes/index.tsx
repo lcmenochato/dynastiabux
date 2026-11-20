@@ -418,8 +418,10 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
           source: "kingdom-robux-new"
         })
       });
-      const data = await response.json();
-      if (!response.ok || data.success === false) throw new Error(data.message || "Não foi possível gerar o Pix.");
+      const responseText = await response.text();
+      let data: any;
+      try { data = JSON.parse(responseText); } catch { throw new Error(`O servidor retornou uma resposta inválida (HTTP ${response.status}).`); }
+      if (!response.ok || data.success === false) throw new Error(data.message || data.error?.message || `Falha ao gerar Pix (HTTP ${response.status}).`);
       const id = String(data.paymentId || data.reference || data.transactionId || "");
       const code = String(data.copyPaste || data.pixCode || "");
       const rawQr = String(data.qrcodeUrl || data.qrCodeUrl || "");
