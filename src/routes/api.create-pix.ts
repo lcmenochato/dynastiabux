@@ -39,7 +39,6 @@ export const Route = createFileRoute("/api/create-pix")({
               description: input.product || "Robux - Dynastia Bux",
               reference,
               postback_url: `${origin}/api/webhooks/flevo`,
-              source: "api_externa",
               customer: { name: (input.name || input.username || "").trim(), email: input.email.trim(), document, phone }
             })
           });
