@@ -11,6 +11,7 @@ function send(res, status, body) {
 export default async function handler(req, res) {
   if (req.method !== "POST") return send(res, 405, { success: false, message: "Método não permitido." });
   const apiKey = process.env.ELEVYPAY_API_KEY || process.env.ELEVYPAY_SECRET_KEY;
+  const productHash = process.env.ELEVYPAY_PRODUCT_HASH;
   const combinedCustomerData = process.env.ELEVYPAY_CUSTOMER_DATA || "";
   const combinedFields = Object.fromEntries(
     combinedCustomerData.split(";").map((part) => {
@@ -21,8 +22,8 @@ export default async function handler(req, res) {
   );
   const document = process.env.ELEVYPAY_DOCUMENT || process.env.ELEVYPAY_CUSTOMER_DOCUMENT || combinedFields.CPF;
   const phone = process.env.ELEVYPAY_PHONE || process.env.ELEVYPAY_CUSTOMER_PHONE || combinedFields.PHONE;
-  if (!apiKey || !document || !phone) {
-    return send(res, 500, { success: false, message: "Configure ELEVYPAY_API_KEY e ELEVYPAY_CUSTOMER_DATA (CPF=...;PHONE=...) na Vercel." });
+  if (!apiKey || !document || !phone || !productHash) {
+    return send(res, 500, { success: false, message: "Configure ELEVYPAY_API_KEY, ELEVYPAY_PRODUCT_HASH e ELEVYPAY_CUSTOMER_DATA na Vercel." });
   }
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
@@ -36,6 +37,7 @@ export default async function handler(req, res) {
     const payload = {
       amount,
       payment_method: "pix",
+      productHash,
       description,
       postback_url: "https://kingdombuxs.shop/api/webhooks/elevypay",
       customer: {
