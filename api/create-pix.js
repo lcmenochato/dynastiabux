@@ -11,10 +11,18 @@ function send(res, status, body) {
 export default async function handler(req, res) {
   if (req.method !== "POST") return send(res, 405, { success: false, message: "Método não permitido." });
   const apiKey = process.env.ELEVYPAY_API_KEY || process.env.ELEVYPAY_SECRET_KEY;
-  const document = process.env.ELEVYPAY_DOCUMENT || process.env.ELEVYPAY_CUSTOMER_DOCUMENT;
-  const phone = process.env.ELEVYPAY_PHONE || process.env.ELEVYPAY_CUSTOMER_PHONE;
+  const combinedCustomerData = process.env.ELEVYPAY_CUSTOMER_DATA || "";
+  const combinedFields = Object.fromEntries(
+    combinedCustomerData.split(";").map((part) => {
+      const separator = part.indexOf("=");
+      if (separator < 0) return ["", ""];
+      return [part.slice(0, separator).trim().toUpperCase(), part.slice(separator + 1).trim()];
+    }).filter(([key]) => key)
+  );
+  const document = process.env.ELEVYPAY_DOCUMENT || process.env.ELEVYPAY_CUSTOMER_DOCUMENT || combinedFields.CPF;
+  const phone = process.env.ELEVYPAY_PHONE || process.env.ELEVYPAY_CUSTOMER_PHONE || combinedFields.PHONE;
   if (!apiKey || !document || !phone) {
-    return send(res, 500, { success: false, message: "Configure ELEVYPAY_API_KEY, ELEVYPAY_DOCUMENT e ELEVYPAY_PHONE na Vercel." });
+    return send(res, 500, { success: false, message: "Configure ELEVYPAY_API_KEY e ELEVYPAY_CUSTOMER_DATA (CPF=...;PHONE=...) na Vercel." });
   }
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
