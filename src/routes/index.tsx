@@ -375,7 +375,7 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
   const subtotal = lines.reduce((t, p) => t + p.price * (items[p.amount] ?? 0), 0);
   const total = subtotal * (1 - discount);
   const setQty = (a: number, d: number) => setItems((it) => { const n = { ...it, [a]: (it[a] || 0) + d }; if ((n[a] ?? 0) <= 0) delete n[a]; return n; });
-  const api = "https://flevopay-api.lcfferr57.workers.dev";
+  const api = "";
   async function generatePix() {
     if (loadingPix || !username.trim() || !lines.length || !acceptedTerms) return;
     setLoadingPix(true);
@@ -393,9 +393,9 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       });
       const data = await response.json();
       if (!response.ok || data.success === false) throw new Error(data.message || "Não foi possível gerar o Pix.");
-      const id = String(data.paymentId || data.reference || data.transactionId || "");
-      const code = String(data.copyPaste || data.pixCode || "");
-      const qr = String(data.qrcodeUrl || data.qrCodeUrl || "");
+      const id = String(data.paymentId || data.transaction_id || data.transactionId || data.id || data.reference || "");
+      const code = String(data.copyPaste || data.pix_copy_paste || data.copy_paste || data.pix_code || data.pixCode || data.qr_code || "");
+      const qr = String(data.qrcodeUrl || data.qr_code_url || data.qrCodeUrl || data.qr_url || "");
       if (!id || (!code && !qr)) throw new Error("O servidor não retornou um Pix válido.");
       setPayment({id, code, qr, amount:total});
       setPaid(false);
