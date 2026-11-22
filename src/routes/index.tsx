@@ -79,8 +79,8 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
 }
 
 function Logo({ big }: { big?: boolean }) {
-  if (big) return <div className="flex h-28 w-52 max-w-full items-center justify-center overflow-hidden"><img src="/images/logo.png" alt="Kingdom Robux" className="h-full w-full scale-[1.18] object-contain" /></div>;
-  return <img src="/images/logo.png" alt="Kingdom Robux" className="h-20 w-auto max-w-[280px] object-contain sm:h-24" />;
+  if (big) return <div className="flex h-28 w-52 max-w-full items-center justify-center overflow-hidden"><img src="https://i.postimg.cc/FKjWs8L5/1793321103487.png" alt="Kingdom Robux" className="h-full w-full scale-[1.18] object-contain" /></div>;
+  return <img src="https://i.postimg.cc/FKjWs8L5/1793321103487.png" alt="Kingdom Robux" className="h-20 w-auto max-w-[280px] object-contain sm:h-24" />;
 }
 
 const reviews: { name: string; text: string; img?: string }[] = [
@@ -264,7 +264,7 @@ export function Index() {
       <header className="sticky top-0 z-10 border-b-2 border-primary/60 bg-background/90 px-4 py-4 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <button type="button" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}><Menu className="h-7 w-7" /></button>
-          <button onClick={() => setView("home")} aria-label="Início" className="flex min-w-0 items-center justify-center"><img src="/images/logo.png" alt="Kingdom Robux prata" className="h-16 w-auto max-w-[230px] object-contain sm:h-20" /></button>
+          <button onClick={() => setView("home")} aria-label="Início" className="flex min-w-0 items-center justify-center"><img src="https://i.postimg.cc/FKjWs8L5/1793321103487.png" alt="Kingdom Robux prata" className="h-16 w-auto max-w-[230px] object-contain sm:h-20" /></button>
           <button onClick={() => setView("checkout")} aria-label="Carrinho" className="relative grid h-12 w-12 place-items-center rounded-full bg-gold text-primary-foreground shadow-gold">
             <ShoppingCart className="h-5 w-5" />
             {cart > 0 && <span className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-foreground text-xs font-bold text-background">{cart}</span>}
