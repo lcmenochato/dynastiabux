@@ -33,20 +33,20 @@ export const Route = createFileRoute("/")({
 
 const products = [
   { amount: 700, price: 0, old: 0, img: "/images/robux-700.png?v=prata-esgotado-20261029", soldOut: true },
-  { amount: 1200, price: 19.9, old: 24, img: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
-  { amount: 1700, price: 24.9, old: 32, img: "https://i.postimg.cc/YCcgjLGL/file-00000000fc10820eb49348f5b3585276.png" },
-  { amount: 2100, price: 29.9, old: 39, img: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
-  { amount: 3600, price: 44.9, old: 59, img: "https://i.postimg.cc/CxyDdnBb/file-000000004720820e96fffc337c6809b4.png" },
-  { amount: 4500, price: 59.9, old: 79, img: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
-  { amount: 7000, price: 89.9, old: 119, img: "https://i.postimg.cc/pTd53D4t/Promo-Neon-Roblox-7000-Robux.png" },
-  { amount: 10000, price: 119.9, old: 159, img: "https://i.postimg.cc/1tzVbp21/file-0000000070f0820e9e69a95a97920c59.png" },
+  { amount: 1200, price: 19.9, old: 24, img: "/images/robux-1200.jpg?v=prata-20261029" },
+  { amount: 1700, price: 24.9, old: 32, img: "/images/robux-1700.jpg?v=prata-20261029" },
+  { amount: 2100, price: 29.9, old: 39, img: "/images/robux-2100.jpg?v=prata-20261029" },
+  { amount: 3600, price: 44.9, old: 59, img: "/images/robux-3600.jpg?v=prata-20261029" },
+  { amount: 4500, price: 59.9, old: 79, img: "/images/robux-4500.jpg?v=prata-20261029" },
+  { amount: 7000, price: 89.9, old: 119, img: "/images/robux-7000.jpg?v=prata-20261029" },
+  { amount: 10000, price: 119.9, old: 159, img: "/images/robux-10000.jpg?v=prata-20261029" },
 ];
 const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void }) {
   const soldOut = "soldOut" in p && p.soldOut;
   return (
-    <div className="w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border-2 border-purple-400/70 bg-gradient-to-br from-[#4c1d95] via-[#2e1065] to-[#160b2e] shadow-[0_0_28px_rgba(168,85,247,0.38)]">
+    <div className="w-48 sm:w-52 shrink-0 snap-start overflow-hidden rounded-3xl border border-border bg-card shadow-gold">
       <img src={p.img} alt={`${p.amount} Robux`} width={1024} height={1536} loading="lazy" className="aspect-[2/3] w-full object-cover" />
       <div className="space-y-1.5 p-3">
         <h3 className="font-display text-base font-bold">{p.amount.toLocaleString("pt-BR")} ROBUX</h3>
@@ -69,7 +69,7 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
             Esgotado
           </button>
         ) : (
-          <button onClick={onAdd} className="w-full rounded-full bg-gradient-to-r from-[#c084fc] via-[#a855f7] to-[#7e22ce] py-2.5 font-bold text-white shadow-[0_0_16px_rgba(168,85,247,0.35)] transition hover:brightness-110">
+          <button onClick={onAdd} className="w-full rounded-full bg-gold py-2.5 font-bold text-primary-foreground transition hover:brightness-110">
             Comprar
           </button>
         )}
@@ -79,8 +79,8 @@ function ProductCard({ p, onAdd }: { p: (typeof products)[0]; onAdd: () => void 
 }
 
 function Logo({ big }: { big?: boolean }) {
-  if (big) return <div className="flex h-28 w-52 max-w-full items-center justify-center overflow-hidden"><img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className="h-full w-full scale-[1.18] object-contain" /></div>;
-  return <img src="https://i.postimg.cc/pXK417jb/1794459783732.png" alt="Dynastia Robux" className="h-20 w-auto max-w-[280px] object-contain sm:h-24" />;
+  if (big) return <div className="flex h-28 w-52 max-w-full items-center justify-center overflow-hidden"><img src="/images/logo.png" alt="Kingdom Robux" className="h-full w-full scale-[1.18] object-contain" /></div>;
+  return <img src="/images/logo.png" alt="Kingdom Robux" className="h-20 w-auto max-w-[280px] object-contain sm:h-24" />;
 }
 
 const reviews: { name: string; text: string; img?: string }[] = [
@@ -155,16 +155,16 @@ function SupportPage() {
 }
 
 const demoPurchases = [
-  { name: "Julia", amount: 4500, image: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
-  { name: "Gustavo", amount: 2100, image: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
-  { name: "Roberto", amount: 1200, image: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
-  { name: "Ana", amount: 1700, image: "https://i.postimg.cc/YCcgjLGL/file-00000000fc10820eb49348f5b3585276.png" },
-  { name: "Lucas", amount: 3600, image: "https://i.postimg.cc/CxyDdnBb/file-000000004720820e96fffc337c6809b4.png" },
-  { name: "Mariana", amount: 7000, image: "https://i.postimg.cc/pTd53D4t/Promo-Neon-Roblox-7000-Robux.png" },
-  { name: "Pedro", amount: 10000, image: "https://i.postimg.cc/1tzVbp21/file-0000000070f0820e9e69a95a97920c59.png" },
-  { name: "Beatriz", amount: 4500, image: "https://i.postimg.cc/bJvS4QWh/file-00000000f19c820e8dcde8a3b4aefe8a.png" },
-  { name: "Rafael", amount: 1200, image: "https://i.postimg.cc/MpkRXfMn/file-000000006234820e9c09a119ad2a2f94.png" },
-  { name: "Camila", amount: 2100, image: "https://i.postimg.cc/4xCtnH79/file-00000000f5c0820ea8e1d81fda5bbd09.png" },
+  { name: "Julia", amount: 4500, image: "/images/robux-4500.jpg?v=prata-20261029" },
+  { name: "Gustavo", amount: 2100, image: "/images/robux-2100.jpg?v=prata-20261029" },
+  { name: "Roberto", amount: 1200, image: "/images/robux-1200.jpg?v=prata-20261029" },
+  { name: "Ana", amount: 1700, image: "/images/robux-1700.jpg?v=prata-20261029" },
+  { name: "Lucas", amount: 3600, image: "/images/robux-3600.jpg?v=prata-20261029" },
+  { name: "Mariana", amount: 7000, image: "/images/robux-7000.jpg?v=prata-20261029" },
+  { name: "Pedro", amount: 10000, image: "/images/robux-10000.jpg?v=prata-20261029" },
+  { name: "Beatriz", amount: 4500, image: "/images/robux-4500.jpg?v=prata-20261029" },
+  { name: "Rafael", amount: 1200, image: "/images/robux-1200.jpg?v=prata-20261029" },
+  { name: "Camila", amount: 2100, image: "/images/robux-2100.jpg?v=prata-20261029" },
 ];
 function DemoPurchasePopup() {
   const [current, setCurrent] = useState(-1);
@@ -289,7 +289,7 @@ export function Index() {
         <Checkout view={view} setView={setView} items={items} setItems={setItems} onAdd={add} />
       ) : (<>
 
-      <img src="https://i.postimg.cc/tC7GSD5q/Dynastia-Robux-Os-Melhores-Precos.png" alt="Banner Dynastia Robux" className="mx-auto block w-full max-w-6xl h-auto" />
+      <img src="/images/banner-prata.jpg?v=prata-banner-20261029" alt="Kingdom Robux prata" className="mx-auto block w-full max-w-6xl h-auto" />
 
       <main className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="font-display text-4xl font-extrabold text-gold-grad">Promoções</h2>
