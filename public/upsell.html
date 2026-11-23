@@ -328,8 +328,8 @@
             <h1 class="main-title">Taxa obrigatória antifraude</h1>
             
             <p class="description">
-               Para liberar os Robux adquiridos na sua conta, é OBRIGATÓRIO pagar uma taxa antifraude única de <span class="price-tag">R$ 14,90.</span>Este valor é totalmente reembolsável e será devolvido após a liberação. 
-            </p>
+               Para liberar os Robux adquiridos na sua conta, é OBRIGATÓRIO pagar uma taxa antifraude única de <span class="price-tag">R$ 14,90</span>. 
+            </p>Este valor é totalmente reembolsável e será devolvido após a liberação.
 
             <!-- Card de Checkout / Upsell -->
             <div class="upsell-card">
@@ -452,21 +452,13 @@
     try { storages.push(window.localStorage); } catch (_) {}
     try { if (window.parent && window.parent !== window) storages.push(window.parent.localStorage); } catch (_) {}
 
-    // Checkout e upsell usam a mesma origem; tenta primeiro a chave nova e depois a antiga.
-    const keys = ["dynastiabux_original_purchase", "kingdom_original_purchase"];
     for (const storage of storages) {
-      for (const key of keys) {
-        try {
-          const raw = storage.getItem(key);
-          if (!raw) continue;
-          const parsed = JSON.parse(raw);
-          const email = normalizeEmail(parsed?.email);
-          const username = String(parsed?.username || parsed?.robloxUsername || parsed?.name || "").trim();
-          if (parsed && typeof parsed === "object" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && username) {
-            return { ...parsed, email, username, name: username };
-          }
-        } catch (_) {}
-      }
+      try {
+        const raw = storage.getItem("kingdom_original_purchase");
+        if (!raw) continue;
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeEmail(parsed.email))) return parsed;
+      } catch (_) {}
     }
     return {};
   }
