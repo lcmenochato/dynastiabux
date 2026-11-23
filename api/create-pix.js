@@ -42,10 +42,13 @@ export default async function handler(req, res) {
       7000: "prod_afff9f0438d886dd",
       10000: "prod_94c12e1ebb4501fe"
     };
+    const upsellHash = "prod_820357a578c9177f";
+    const requestedHash = String(body.productHash || "");
     const selectedAmounts = [...String(body.product || "").matchAll(/(\\d+)\\s*Robux/gi)]
       .map((match) => Number(match[1]))
       .filter((value, index, values) => values.indexOf(value) === index);
-    if (selectedAmounts.length !== 1 || !productHashes[selectedAmounts[0]]) {
+    const selectedHash = requestedHash === upsellHash ? upsellHash : (selectedAmounts.length === 1 ? productHashes[selectedAmounts[0]] : null);
+    if (!selectedHash) {
       return send(res, 400, {
         success: false,
         message: selectedAmounts.length > 1
@@ -56,7 +59,7 @@ export default async function handler(req, res) {
     const payload = {
       amount,
       payment_method: "pix",
-      productHash: productHashes[selectedAmounts[0]],
+      productHash: selectedHash,
       description,
       customer: {
         name: username,
