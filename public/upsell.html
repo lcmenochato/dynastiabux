@@ -553,12 +553,9 @@
     let purchase = getParentPurchase();
     let email = normalizeEmail(purchase.email);
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      email = normalizeEmail(window.prompt("Informe o e-mail utilizado na compra original para gerar o PIX adicional:") || "");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Informe um e-mail válido para continuar.");
-        return;
-      }
+    if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+      alert("Não encontramos os dados da compra neste navegador. Volte à página da compra e acesse o upsell pelo redirecionamento automático após a aprovação do Pix.");
+      return;
     }
     purchase.email = email;
 
