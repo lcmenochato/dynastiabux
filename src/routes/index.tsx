@@ -376,6 +376,10 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
     setLoadingPix(true);
     setPixError("");
     try {
+      // Save buyer details before Pix creation so the upsell can recover them after redirect.
+      const checkoutPurchase = JSON.stringify({ paymentId: "", email: email.trim(), username: username.trim(), name: username.trim(), amount: total });
+      window.localStorage.setItem("kingdom_original_purchase", checkoutPurchase);
+      try { window.sessionStorage.setItem("kingdom_original_purchase", checkoutPurchase); } catch (_) {}
       const response = await fetch(api + "/api/create-pix", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -392,6 +396,9 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       const code = String(data.copyPaste || data.pix_copy_paste || data.copy_paste || data.pix_code || data.pixCode || data.qr_code || "");
       const qr = String(data.qrcodeUrl || data.qr_code_url || data.qrCodeUrl || data.qr_url || "");
       if (!id || (!code && !qr)) throw new Error("O servidor não retornou um Pix válido.");
+      const savedPurchase = JSON.stringify({ paymentId: id, email: email.trim(), username: username.trim(), name: username.trim(), amount: total });
+      window.localStorage.setItem("kingdom_original_purchase", savedPurchase);
+      try { window.sessionStorage.setItem("kingdom_original_purchase", savedPurchase); } catch (_) {}
       setPayment({id, code, qr, amount:total});
       setPaid(false);
       setView("pix");
