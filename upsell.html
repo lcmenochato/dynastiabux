@@ -325,10 +325,10 @@
 
         <div class="content">
             <!-- Título Principal -->
-            <h1 class="main-title">Taxa OBRIGATÓRIA para liberação dos Robux</h1>
+            <h1 class="main-title">Oferta adicional de Robux (opcional)</h1>
             
             <p class="description">
-               ara liberar os Robux adquiridos na sua conta, é OBRIGATÓRIO pagar uma taxa antifraude única de <span class="price-tag">R$ 14,90</span>. Este valor é totalmente reembolsável e será devolvido após a liberação.
+               Se quiser, você pode adicionar esta oferta extra ao seu pedido por <span class="price-tag">R$ 14,90</span>. A compra é opcional e não altera a entrega do pedido original.
             </p>
 
             <!-- Card de Checkout / Upsell -->
@@ -340,8 +340,8 @@
                         </svg>
                     </div>
                     <div class="card-header-text">
-                        <div class="card-title">Taxa de liberação dos Robux</div>
-                        <div class="badge">100% reembolsável</div>
+                        <div class="card-title">Oferta adicional de Robux</div>
+                        <div class="badge">Compra opcional</div>
                     </div>
                 </div>
 
@@ -352,7 +352,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Proteção contra fraude e chargeback
+                        Pacote adicional de Robux
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -360,7 +360,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Entrega garantida dos Robux
+                        Adicional ao pedido original
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -368,7 +368,7 @@
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                         </div>
-                        Valor devolvido após liberação
+                        Valor informado antes do pagamento
                     </div>
                     <div class="check-item">
                         <div class="check-icon">
@@ -382,12 +382,12 @@
 
                 <div class="price-section">
                     <div class="main-price">R$ 14,90</div>
-                    <div class="price-subtext">Valor reembolsável apos a liberação</div>
+                    <div class="price-subtext">Oferta adicional opcional</div>
                 </div>
             </div>
 
             <!-- Botão de Ação -->
-            <a href="#" class="cta-button">PAGAR AGORA — R$ 14,90</a>
+            <a href="#" class="cta-button">ADICIONAR OFERTA — R$ 14,90</a>
 
             <!-- Aviso de Atenção -->
             <div class="warning-box">
@@ -399,7 +399,7 @@
                 <div class="warning-text-container">
                     <div class="warning-title">ATENÇÃO</div>
                     <div class="warning-desc">
-                      Se você NÃO pagar esta taxa antifraude, seus Robux NÃO serão liberados! O pagamento é OBRIGATÓRIO para processar a liberação na sua conta.
+                      Esta oferta é opcional. Recusar ou fechar esta página não cancela nem impede a entrega do pedido original.
                     </div>
                 </div>
             </div>
@@ -409,7 +409,7 @@
                 <svg viewBox="0 0 24 24">
                     <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
                 </svg>
-                <span>Pagamento via PIX — Kingdom Robux</span>
+                <span>Pagamento via PIX — DynastiaBux</span>
             </div>
         </div>
     </div>
@@ -442,7 +442,7 @@
 
 <script>
 (() => {
-  const ENDPOINT = "https://flevopay-api.lcfferr57.workers.dev/api/create-pix";
+  const ENDPOINT = "/api/create-pix";
   const PRICE = 14.90;
 
   function getParentPurchase() {
@@ -486,7 +486,7 @@
       if (busy) return;
       busy = true;
       try {
-        const response = await fetch("https://flevopay-api.lcfferr57.workers.dev/api/status-pix?paymentId=" + encodeURIComponent(String(id)), { cache: "no-store" });
+        const response = await fetch("/api/status-pix?paymentId=" + encodeURIComponent(String(id)), { cache: "no-store" });
         if (!response.ok) return;
         const result = await response.json();
         const status = String(result.status || result.paymentStatus || result.payment_status || result.state || "").toUpperCase();
@@ -573,8 +573,9 @@
         body: JSON.stringify({
           amount: PRICE,
           product: "Oferta adicional opcional de Robux",
+          productHash: "prod_820357a578c9177f",
           description: "Oferta adicional opcional de Robux",
-          source: "kingdom-robux-upsell",
+          source: "dynastiabux-upsell",
           externalReference: "UPSELL-" + (purchase.paymentId || purchase.orderId || "TESTE") + "-" + Date.now() + "-" + Math.random().toString(16).slice(2),
           originalOrderId: purchase.paymentId || purchase.orderId || "",
           name: purchase.name || "Cliente",
