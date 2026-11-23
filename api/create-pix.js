@@ -36,6 +36,7 @@ export default async function handler(req, res) {
     const payload = {
       amount,
       payment_method: "pix",
+      productHash: process.env.ELEVYPAY_PRODUCT_HASH || "prod_35e3015e29f54a12",
       description,
       customer: {
         name: username,
