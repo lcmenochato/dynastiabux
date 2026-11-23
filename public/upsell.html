@@ -553,7 +553,7 @@
     let purchase = getParentPurchase();
     let email = normalizeEmail(purchase.email);
 
-    if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       alert("Não encontramos os dados da compra neste navegador. Volte à página da compra e acesse o upsell pelo redirecionamento automático após a aprovação do Pix.");
       return;
     }
