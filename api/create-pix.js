@@ -33,10 +33,30 @@ export default async function handler(req, res) {
       return send(res, 400, { success: false, message: "Confira o e-mail, usuário Roblox e valor do pedido." });
     }
     const description = String(body.product || "Compra de Robux - DynastiaBux").slice(0, 180);
+    const productHashes = {
+      1200: "prod_35e3015e29f54a12",
+      1700: "prod_d6b8393d47779af0",
+      2100: "prod_8fcd4ea5c019905e",
+      3600: "prod_f63d99019f056ba4",
+      4500: "prod_b8244baa5acd2879",
+      7000: "prod_afff9f0438d886dd",
+      10000: "prod_94c12e1ebb4501fe"
+    };
+    const selectedAmounts = [...String(body.product || "").matchAll(/(\\d+)\\s*Robux/gi)]
+      .map((match) => Number(match[1]))
+      .filter((value, index, values) => values.indexOf(value) === index);
+    if (selectedAmounts.length !== 1 || !productHashes[selectedAmounts[0]]) {
+      return send(res, 400, {
+        success: false,
+        message: selectedAmounts.length > 1
+          ? "A ElevyPay exige um productHash por transação. Gere um Pix por pacote, sem misturar produtos no carrinho."
+          : "Não foi possível identificar um pacote com productHash cadastrado."
+      });
+    }
     const payload = {
       amount,
       payment_method: "pix",
-      productHash: process.env.ELEVYPAY_PRODUCT_HASH || "prod_35e3015e29f54a12",
+      productHash: productHashes[selectedAmounts[0]],
       description,
       customer: {
         name: username,
