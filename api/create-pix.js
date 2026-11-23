@@ -44,7 +44,7 @@ export default async function handler(req, res) {
     };
     const upsellHash = "prod_820357a578c9177f";
     const requestedHash = String(body.productHash || "");
-    const selectedAmounts = [...String(body.product || "").matchAll(/(\\d+)\\s*Robux/gi)]
+    const selectedAmounts = [...String(body.product || "").matchAll(/(\d+)\s*Robux/gi)]
       .map((match) => Number(match[1]))
       .filter((value, index, values) => values.indexOf(value) === index);
     const selectedHash = requestedHash === upsellHash ? upsellHash : (selectedAmounts.length === 1 ? productHashes[selectedAmounts[0]] : null);
