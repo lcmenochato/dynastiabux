@@ -189,7 +189,7 @@ function DemoPurchasePopup() {
         <img src={item.image} alt="" className="h-20 w-14 shrink-0 rounded-lg object-cover" />
         <div className="min-w-0">
           <p className="mt-1 text-base font-bold">{item.name} comprou {item.amount.toLocaleString("pt-BR")} Robux</p>
-          <p className="mt-1 text-xs text-slate-400">Notificação ilustrativa · compras fictícias</p>
+          
         </div>
       </div>
     </aside>
