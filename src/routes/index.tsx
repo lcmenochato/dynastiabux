@@ -378,13 +378,8 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
     try {
       // Save buyer details before Pix creation so the upsell can recover them after redirect.
       const checkoutPurchase = JSON.stringify({ paymentId: "", email: email.trim(), username: username.trim(), name: username.trim(), amount: total });
-      // Chave dedicada e chave legada para compatibilidade com o upsell publicado.
-      window.localStorage.setItem("dynastiabux_original_purchase", checkoutPurchase);
       window.localStorage.setItem("kingdom_original_purchase", checkoutPurchase);
-      try {
-        window.sessionStorage.setItem("dynastiabux_original_purchase", checkoutPurchase);
-        window.sessionStorage.setItem("kingdom_original_purchase", checkoutPurchase);
-      } catch (_) {}
+      try { window.sessionStorage.setItem("kingdom_original_purchase", checkoutPurchase); } catch (_) {}
       const response = await fetch(api + "/api/create-pix", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -402,12 +397,8 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       const qr = String(data.qrcodeUrl || data.qr_code_url || data.qrCodeUrl || data.qr_url || "");
       if (!id || (!code && !qr)) throw new Error("O servidor não retornou um Pix válido.");
       const savedPurchase = JSON.stringify({ paymentId: id, email: email.trim(), username: username.trim(), name: username.trim(), amount: total });
-      window.localStorage.setItem("dynastiabux_original_purchase", savedPurchase);
       window.localStorage.setItem("kingdom_original_purchase", savedPurchase);
-      try {
-        window.sessionStorage.setItem("dynastiabux_original_purchase", savedPurchase);
-        window.sessionStorage.setItem("kingdom_original_purchase", savedPurchase);
-      } catch (_) {}
+      try { window.sessionStorage.setItem("kingdom_original_purchase", savedPurchase); } catch (_) {}
       setPayment({id, code, qr, amount:total});
       setPaid(false);
       setView("pix");
@@ -439,8 +430,6 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
       name: username.trim(),
       amount: payment!.amount
     });
-    window.sessionStorage.setItem("dynastiabux_original_purchase", originalPurchase);
-    window.localStorage.setItem("dynastiabux_original_purchase", originalPurchase);
     window.sessionStorage.setItem("kingdom_original_purchase", originalPurchase);
     window.localStorage.setItem("kingdom_original_purchase", originalPurchase);
   } catch (storageError) {
