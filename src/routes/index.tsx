@@ -412,7 +412,18 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
     let active = true;
     async function check() {
       try {
-        const response = await fetch(api + "/api/status-pix?paymentId=" + encodeURIComponent(payment!.id), {cache:"no-store"});
+        const ttclid = new URLSearchParams(window.location.search).get("ttclid") || "";
+        const response = await fetch(api + "/api/status-pix", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+          body: JSON.stringify({
+            paymentId: payment!.id,
+            email: email.trim(),
+            amount: payment!.amount,
+            ttclid
+          })
+        });
         if (!response.ok) return;
         const data = await response.json();
         const status = String(data.status || data.paymentStatus || data.payment_status || data.state || "").toUpperCase();
@@ -423,6 +434,15 @@ function Checkout({ view, setView, items, setItems, onAdd }: { view: "checkout" 
 ) {
   setPaid(true);
   try {
+    const purchaseEventId = "dynastia_purchase_" + payment!.id;
+    const trackedPurchases = JSON.parse(window.localStorage.getItem("dynastia_tiktok_purchases") || "[]") as string[];
+    if (!trackedPurchases.includes(purchaseEventId)) {
+      window.localStorage.setItem("dynastia_tiktok_purchases", JSON.stringify([...trackedPurchases, purchaseEventId].slice(-100)));
+      const ttq = (window as any).ttq;
+      if (ttq && typeof ttq.track === "function") {
+        ttq.track("Purchase", { value: Number(payment!.amount.toFixed(2)), currency: "BRL" }, { event_id: purchaseEventId });
+      }
+    }
     const originalPurchase = JSON.stringify({
       paymentId: payment!.id,
       email: email.trim(),
