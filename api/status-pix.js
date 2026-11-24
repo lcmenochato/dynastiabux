@@ -18,7 +18,7 @@ function sha256(value) {
 
 function getCookie(req, name) {
   const cookieHeader = String(req.headers?.cookie || "");
-    const pair = cookieHeader.split(";").map((part) => part.trim()).find((part) => part.startsWith(name + "="));
+  const pair = cookieHeader.split(";").map((part) => part.trim()).find((part) => part.startsWith(name + "="));
   return pair ? decodeURIComponent(pair.slice(name.length + 1)) : "";
 }
 
