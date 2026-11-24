@@ -18,8 +18,8 @@ function sha256(value) {
 
 function getCookie(req, name) {
   const cookieHeader = String(req.headers?.cookie || "");
-  const match = cookieHeader.match(new RegExp("(?:^|;\\s*)" + name.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&") + "=([^;]*)"));
-  return match ? decodeURIComponent(match[1]) : "";
+    const pair = cookieHeader.split(";").map((part) => part.trim()).find((part) => part.startsWith(name + "="));
+  return pair ? decodeURIComponent(pair.slice(name.length + 1)) : "";
 }
 
 async function reportTikTokPurchase({ req, paymentId, email, amount }) {
@@ -29,7 +29,7 @@ async function reportTikTokPurchase({ req, paymentId, email, amount }) {
     return false;
   }
   const numericAmount = Number(amount);
-  if (!email || !/^\\S+@\\S+\\.\\S+$/.test(email) || !Number.isFinite(numericAmount) || numericAmount <= 0) {
+  if (!email || !/^\S+@\S+\.\S+$/.test(email) || !Number.isFinite(numericAmount) || numericAmount <= 0) {
     console.warn("TikTok Purchase not sent: invalid email or amount.", { paymentId });
     return false;
   }
