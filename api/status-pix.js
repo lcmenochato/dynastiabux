@@ -22,7 +22,7 @@ function getCookie(req, name) {
   return pair ? decodeURIComponent(pair.slice(name.length + 1)) : "";
 }
 
-async function reportTikTokPurchase({ req, paymentId, email, amount }) {
+export async function reportTikTokPurchase({ req, paymentId, email, amount }) {
   const accessToken = process.env.TIKTOK_ACCESS_TOKEN;
   if (!accessToken) {
     console.warn("TikTok Purchase not sent: configure TIKTOK_ACCESS_TOKEN in Vercel.");
