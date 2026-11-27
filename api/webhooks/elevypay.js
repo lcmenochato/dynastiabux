@@ -1,5 +1,4 @@
-// ElevyPay webhook receiver. A confirmed status is rechecked against ElevyPay
-// before sending TikTok Purchase, using the same event_id as the browser flow.
+// ElevyPay webhook receiver — verifies approved payments before sending TikTok Purchase.
 import { reportTikTokPurchase } from "../status-pix.js";
 
 function send(res, status, body) {
@@ -9,22 +8,25 @@ function send(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
-function findValue(value, keys, depth = 0) {
-  if (!value || typeof value !== "object" || depth > 5) return "";
+function firstValueDeep(value, keys, depth = 0) {
+  if (!value || typeof value !== "object" || depth > 8) return "";
   for (const key of keys) {
-    if (value[key] !== undefined && value[key] !== null && value[key] !== "") return value[key];
+    const candidate = value[key];
+    if (candidate !== undefined && candidate !== null && candidate !== "") {
+      if (typeof candidate !== "object") return candidate;
+    }
   }
-  for (const key of ["data", "transaction", "payment", "payload", "customer"]) {
-    const found = findValue(value[key], keys, depth + 1);
+  for (const child of Object.values(value)) {
+    const found = firstValueDeep(child, keys, depth + 1);
     if (found !== "") return found;
   }
   return "";
 }
 
 function normalizeAmount(value) {
+  if (typeof value === "string") value = value.replace(",", ".");
   const amount = Number(value);
   if (!Number.isFinite(amount) || amount <= 0) return 0;
-  // ElevyPay may return the amount in cents; checkout amounts are in BRL.
   return amount > 500 ? amount / 100 : amount;
 }
 
@@ -39,8 +41,9 @@ export default async function handler(req, res) {
   }
   if (!body || typeof body !== "object" || Array.isArray(body)) body = {};
 
-  const id = String(findValue(body, [
-    "transaction_id", "transactionId", "payment_id", "paymentId", "external_id", "externalId", "id"
+  const id = String(firstValueDeep(body, [
+    "transaction_id", "transactionId", "payment_id", "paymentId",
+    "external_id", "externalId", "id"
   ]) || "").trim();
 
   if (!id) {
@@ -61,18 +64,13 @@ export default async function handler(req, res) {
     );
     const statusData = await response.json().catch(() => ({}));
     if (!response.ok) {
-      console.error("ElevyPay webhook status verification failed", {
-        transactionId: id, httpStatus: response.status
-      });
+      console.error("ElevyPay webhook verification failed.", { transactionId: id, httpStatus: response.status });
       return send(res, 502, { received: false, message: "Não foi possível validar a transação na ElevyPay." });
     }
 
-    const root = statusData.data || statusData.transaction || statusData.payment || statusData;
-    const rawStatus = String(
-      root.status || root.payment_status || root.paymentStatus ||
-      statusData.status || statusData.payment_status || ""
-    ).toUpperCase();
-    const approved = root.paid === true || statusData.paid === true ||
+    const rawStatus = String(firstValueDeep(statusData, ["status", "payment_status", "paymentStatus"]) || "").toUpperCase();
+    const paidValue = firstValueDeep(statusData, ["paid", "is_paid", "isPaid"]);
+    const approved = paidValue === true || String(paidValue).toLowerCase() === "true" ||
       ["APPROVED", "PAID", "COMPLETED", "CONFIRMED", "SUCCESS", "SUCCEEDED"].includes(rawStatus);
 
     if (!approved) {
@@ -81,33 +79,39 @@ export default async function handler(req, res) {
     }
 
     const email = String(
-      findValue(body, ["email"]) || findValue(statusData, ["email"]) || ""
+      firstValueDeep(body, ["email", "customer_email", "customerEmail"]) ||
+      firstValueDeep(statusData, ["email", "customer_email", "customerEmail"]) || ""
     ).trim().toLowerCase();
-    const amountValue =
-      findValue(statusData, ["amount", "total", "value"]) ||
-      findValue(body, ["amount", "total", "value"]);
-    const amount = normalizeAmount(amountValue);
+    const amountInput =
+      firstValueDeep(statusData, ["amount", "total", "value", "amount_cents", "amountCents"]) ||
+      firstValueDeep(body, ["amount", "total", "value", "amount_cents", "amountCents"]);
+    const amount = normalizeAmount(amountInput);
 
     if (!email || !amount) {
-      console.error("ElevyPay payment approved, but Purchase data is incomplete.", {
-        transactionId: id, hasEmail: Boolean(email), hasAmount: Boolean(amount)
+      console.error("ElevyPay approved payment has incomplete Purchase data.", {
+        transactionId: id, hasEmail: Boolean(email), normalizedAmount: amount
       });
-      return send(res, 200, { received: true, approved: true, purchaseSent: false, reason: "Dados de email/valor ausentes." });
+      return send(res, 200, {
+        received: true, approved: true, purchaseSent: false,
+        reason: "Dados de e-mail ou valor ausentes na consulta da transação."
+      });
     }
 
     const purchaseSent = await reportTikTokPurchase({
-      req: { headers: req.headers, query: {}, body: { ttclid: findValue(body, ["ttclid"]) } },
-      paymentId: id,
-      email,
-      amount
+      req: {
+        headers: req.headers,
+        query: {},
+        body: { ttclid: firstValueDeep(body, ["ttclid"]) }
+      },
+      paymentId: id, email, amount
     });
 
     console.log("ElevyPay approved payment processed.", {
-      transactionId: id, purchaseSent
+      transactionId: id, purchaseSent, amount
     });
     return send(res, 200, { received: true, approved: true, purchaseSent });
   } catch (error) {
-    console.error("ElevyPay webhook processing failed", error);
+    console.error("ElevyPay webhook processing failed.", error);
     return send(res, 500, { received: false, message: "Falha ao processar webhook." });
   }
 }
