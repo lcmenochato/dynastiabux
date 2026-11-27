@@ -77,6 +77,7 @@ export async function reportTikTokPurchase({ req, paymentId, email, amount }) {
     const payload = {
       event_source: "web",
       event_source_id: TIKTOK_PIXEL_ID,
+      test_event_code: "TEST75570",
       data: [{
         event: "Purchase",
         event_time: Math.floor(Date.now() / 1000),
