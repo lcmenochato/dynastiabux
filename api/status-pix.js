@@ -1,7 +1,7 @@
 // Vercel Serverless Function — ElevyPay payment status + TikTok Events API
 import { createHash } from "node:crypto";
 
-const TIKTOK_PIXEL_ID = "DBKG3UJC77U24SKT8ADG";
+const TIKTOK_PIXEL_ID = "DC509VRC77U0A5LSPVS0";
 const sentPurchaseEvents = new Set();
 const pendingPurchaseEvents = new Map();
 
@@ -77,7 +77,6 @@ export async function reportTikTokPurchase({ req, paymentId, email, amount }) {
     const payload = {
       event_source: "web",
       event_source_id: TIKTOK_PIXEL_ID,
-      test_event_code: "TEST75570",
       data: [{
         event: "Purchase",
         event_time: Math.floor(Date.now() / 1000),
