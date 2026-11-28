@@ -5,7 +5,7 @@
  * KV: PURCHASE_EVENTS. Optional: ORIGEM_PERMITIDA, VELANI_POSTBACK_URL.
  */
 const BASE = "https://api.velanipagamentos.com.br/api/v1/api-gateway";
-const PIXEL = "DBKG3UJC77U24SKT8ADG";
+const PIXEL = "DC509VRC77U0A5LSP";
 const WORKER_WEBHOOK = "https://flevopay-api.lcfferr57.workers.dev/api/velani-webhook";
 const clean = (v, max=300) => String(v ?? "").trim().slice(0,max);
 const approved = s => clean(s).toLowerCase() === "paid";
